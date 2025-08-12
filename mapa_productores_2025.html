@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_c46440d41a2512d793918d14f2bcf64a {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_c46440d41a2512d793918d14f2bcf64a" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_c46440d41a2512d793918d14f2bcf64a = L.map(
+                "map_c46440d41a2512d793918d14f2bcf64a",
+                {
+                    center: [20.2, -103.3],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 7,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_599fe1510344c922389211c226b0e8c5 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_599fe1510344c922389211c226b0e8c5.addTo(map_c46440d41a2512d793918d14f2bcf64a);
+        
+    
+            var circle_marker_83eabe92d540df77a7bd0ceb7fa96aff = L.circleMarker(
+                [20.28, -103.43],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_c46440d41a2512d793918d14f2bcf64a);
+        
+    
+        var popup_6228fa0c7d0d231cd47936c55282507f = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_0628b27ed2a77136e86ec1108e8f012f = $(`<div id="html_0628b27ed2a77136e86ec1108e8f012f" style="width: 100.0%; height: 100.0%;"><b>BLACK_Prod_1</b><br>Zona: Jocotepec<br><b>Consumo</b>: 103.5 L/Ha<br><b>Diferencia</b>: -108.4 L</div>`)[0];
+                popup_6228fa0c7d0d231cd47936c55282507f.setContent(html_0628b27ed2a77136e86ec1108e8f012f);
+            
+        
+
+        circle_marker_83eabe92d540df77a7bd0ceb7fa96aff.bindPopup(popup_6228fa0c7d0d231cd47936c55282507f)
+        ;
+
+        
+    
+    
+            var circle_marker_31a03db62a2bbc8dfabe88bd676a0b76 = L.circleMarker(
+                [20.2, -103.4],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_c46440d41a2512d793918d14f2bcf64a);
+        
+    
+        var popup_608fac996b4c4057d55bfcbe83a84fc1 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_ad3fed6b1ceec16d605b08e36d3eddd6 = $(`<div id="html_ad3fed6b1ceec16d605b08e36d3eddd6" style="width: 100.0%; height: 100.0%;"><b>BLACK_Prod_2</b><br>Zona: Tuxcueca<br><b>Consumo</b>: 102.0 L/Ha<br><b>Diferencia</b>: -110.0 L</div>`)[0];
+                popup_608fac996b4c4057d55bfcbe83a84fc1.setContent(html_ad3fed6b1ceec16d605b08e36d3eddd6);
+            
+        
+
+        circle_marker_31a03db62a2bbc8dfabe88bd676a0b76.bindPopup(popup_608fac996b4c4057d55bfcbe83a84fc1)
+        ;
+
+        
+    
+    
+            var circle_marker_c143cf1170ea71845e06dd595ff73c91 = L.circleMarker(
+                [19.98, -102.28],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_c46440d41a2512d793918d14f2bcf64a);
+        
+    
+        var popup_05d05b0dd2f65295cfe22bf1311535d5 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_f4d6f3875dbecff5f7fbab4ff39aae4f = $(`<div id="html_f4d6f3875dbecff5f7fbab4ff39aae4f" style="width: 100.0%; height: 100.0%;"><b>BLACK_Prod_3</b><br>Zona: Zamora<br><b>Consumo</b>: 102.4 L/Ha<br><b>Diferencia</b>: -109.5 L</div>`)[0];
+                popup_05d05b0dd2f65295cfe22bf1311535d5.setContent(html_f4d6f3875dbecff5f7fbab4ff39aae4f);
+            
+        
+
+        circle_marker_c143cf1170ea71845e06dd595ff73c91.bindPopup(popup_05d05b0dd2f65295cfe22bf1311535d5)
+        ;
+
+        
+    
+    
+            var circle_marker_46f36fe05f0b33c5deb6b2745e43ad85 = L.circleMarker(
+                [19.88, -102.22],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_c46440d41a2512d793918d14f2bcf64a);
+        
+    
+        var popup_b8f1805a582d0c5f2fc4fbf877c3d7d7 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_1b79c362f6841f9ef0d0a685fb3f2b9c = $(`<div id="html_1b79c362f6841f9ef0d0a685fb3f2b9c" style="width: 100.0%; height: 100.0%;"><b>BLACK_Prod_4</b><br>Zona: Tangancícuaro<br><b>Consumo</b>: 98.9 L/Ha<br><b>Diferencia</b>: -113.1 L</div>`)[0];
+                popup_b8f1805a582d0c5f2fc4fbf877c3d7d7.setContent(html_1b79c362f6841f9ef0d0a685fb3f2b9c);
+            
+        
+
+        circle_marker_46f36fe05f0b33c5deb6b2745e43ad85.bindPopup(popup_b8f1805a582d0c5f2fc4fbf877c3d7d7)
+        ;
+
+        
+    
+    
+            var circle_marker_ae09f405af57379e030688f57c72a16d = L.circleMarker(
+                [20.2, -103.4],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_c46440d41a2512d793918d14f2bcf64a);
+        
+    
+        var popup_8711b4e41ed2af6453143dac5312a693 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_2baa7152fa8bea8699ea66e02e63c57e = $(`<div id="html_2baa7152fa8bea8699ea66e02e63c57e" style="width: 100.0%; height: 100.0%;"><b>BLACK_Prod_5</b><br>Zona: Tuxcueca<br><b>Consumo</b>: 102.0 L/Ha<br><b>Diferencia</b>: -110.0 L</div>`)[0];
+                popup_8711b4e41ed2af6453143dac5312a693.setContent(html_2baa7152fa8bea8699ea66e02e63c57e);
+            
+        
+
+        circle_marker_ae09f405af57379e030688f57c72a16d.bindPopup(popup_8711b4e41ed2af6453143dac5312a693)
+        ;
+
+        
+    
+    
+            var circle_marker_332b351c6b90395d1acf1099bfb6aac0 = L.circleMarker(
+                [20.2, -103.4],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_c46440d41a2512d793918d14f2bcf64a);
+        
+    
+        var popup_430c54640e48189d1ad62eed16cbc7ad = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_60ae1add4d99dc671d151e1b13e64e4c = $(`<div id="html_60ae1add4d99dc671d151e1b13e64e4c" style="width: 100.0%; height: 100.0%;"><b>BLUE_Prod_1</b><br>Zona: Tuxcueca<br><b>Consumo</b>: 121.2 L/Ha<br><b>Diferencia</b>: -90.8 L</div>`)[0];
+                popup_430c54640e48189d1ad62eed16cbc7ad.setContent(html_60ae1add4d99dc671d151e1b13e64e4c);
+            
+        
+
+        circle_marker_332b351c6b90395d1acf1099bfb6aac0.bindPopup(popup_430c54640e48189d1ad62eed16cbc7ad)
+        ;
+
+        
+    
+    
+            var circle_marker_d4a6ed4d3bef1c84a6c525afbf8618af = L.circleMarker(
+                [19.88, -102.22],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_c46440d41a2512d793918d14f2bcf64a);
+        
+    
+        var popup_71da4dd3dd00d9cdf13160c88efd9e86 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_17ce8af1525e105449b32518e43b72f2 = $(`<div id="html_17ce8af1525e105449b32518e43b72f2" style="width: 100.0%; height: 100.0%;"><b>BLUE_Prod_2</b><br>Zona: Tangancícuaro<br><b>Consumo</b>: 119.2 L/Ha<br><b>Diferencia</b>: -92.7 L</div>`)[0];
+                popup_71da4dd3dd00d9cdf13160c88efd9e86.setContent(html_17ce8af1525e105449b32518e43b72f2);
+            
+        
+
+        circle_marker_d4a6ed4d3bef1c84a6c525afbf8618af.bindPopup(popup_71da4dd3dd00d9cdf13160c88efd9e86)
+        ;
+
+        
+    
+    
+            var circle_marker_0246df2a639742133e1e5c87fe7a187f = L.circleMarker(
+                [19.7, -103.5],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_c46440d41a2512d793918d14f2bcf64a);
+        
+    
+        var popup_cb7e3b92936719db33726a5f8d4d9fff = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_50ea98dfde8eb2e54294235904d7fe8f = $(`<div id="html_50ea98dfde8eb2e54294235904d7fe8f" style="width: 100.0%; height: 100.0%;"><b>BLUE_Prod_3</b><br>Zona: Guzmán<br><b>Consumo</b>: 120.9 L/Ha<br><b>Diferencia</b>: -91.0 L</div>`)[0];
+                popup_cb7e3b92936719db33726a5f8d4d9fff.setContent(html_50ea98dfde8eb2e54294235904d7fe8f);
+            
+        
+
+        circle_marker_0246df2a639742133e1e5c87fe7a187f.bindPopup(popup_cb7e3b92936719db33726a5f8d4d9fff)
+        ;
+
+        
+    
+    
+            var circle_marker_2e80331a272fa117cfc7f8518bf053cd = L.circleMarker(
+                [19.7, -103.5],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_c46440d41a2512d793918d14f2bcf64a);
+        
+    
+        var popup_9474a97a135293c8b9fd5e64e4ae7d27 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_f35cb8338dfbe3a32537156ab9c49bab = $(`<div id="html_f35cb8338dfbe3a32537156ab9c49bab" style="width: 100.0%; height: 100.0%;"><b>BLUE_Prod_4</b><br>Zona: Guzmán<br><b>Consumo</b>: 120.9 L/Ha<br><b>Diferencia</b>: -91.0 L</div>`)[0];
+                popup_9474a97a135293c8b9fd5e64e4ae7d27.setContent(html_f35cb8338dfbe3a32537156ab9c49bab);
+            
+        
+
+        circle_marker_2e80331a272fa117cfc7f8518bf053cd.bindPopup(popup_9474a97a135293c8b9fd5e64e4ae7d27)
+        ;
+
+        
+    
+    
+            var circle_marker_b2d86572b42ec06a1df3b178fbc6fcf0 = L.circleMarker(
+                [20.28, -103.43],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_c46440d41a2512d793918d14f2bcf64a);
+        
+    
+        var popup_a54d7370ffbe8b558ae65875c37a45ac = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_fcba99b593d886acfcb4f6bedb385e6b = $(`<div id="html_fcba99b593d886acfcb4f6bedb385e6b" style="width: 100.0%; height: 100.0%;"><b>BLUE_Prod_5</b><br>Zona: Jocotepec<br><b>Consumo</b>: 120.4 L/Ha<br><b>Diferencia</b>: -91.5 L</div>`)[0];
+                popup_a54d7370ffbe8b558ae65875c37a45ac.setContent(html_fcba99b593d886acfcb4f6bedb385e6b);
+            
+        
+
+        circle_marker_b2d86572b42ec06a1df3b178fbc6fcf0.bindPopup(popup_a54d7370ffbe8b558ae65875c37a45ac)
+        ;
+
+        
+    
+    
+            var circle_marker_7a95809fc553bd5acd1567dab84e7647 = L.circleMarker(
+                [19.98, -102.28],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_c46440d41a2512d793918d14f2bcf64a);
+        
+    
+        var popup_86b84cca3307b90b0fc202f4ee29056f = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_a99e60a24df5012377bdd8c532575e3c = $(`<div id="html_a99e60a24df5012377bdd8c532575e3c" style="width: 100.0%; height: 100.0%;"><b>RASP_Prod_1</b><br>Zona: Zamora<br><b>Consumo</b>: 83.4 L/Ha<br><b>Diferencia</b>: -128.6 L</div>`)[0];
+                popup_86b84cca3307b90b0fc202f4ee29056f.setContent(html_a99e60a24df5012377bdd8c532575e3c);
+            
+        
+
+        circle_marker_7a95809fc553bd5acd1567dab84e7647.bindPopup(popup_86b84cca3307b90b0fc202f4ee29056f)
+        ;
+
+        
+    
+    
+            var circle_marker_27b65c351678abae4cfa3276a865b539 = L.circleMarker(
+                [19.88, -102.22],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_c46440d41a2512d793918d14f2bcf64a);
+        
+    
+        var popup_a9618fcc800cfd5a612a08652103526c = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_a0a6d1bf5bb31966b8f21709ef422f55 = $(`<div id="html_a0a6d1bf5bb31966b8f21709ef422f55" style="width: 100.0%; height: 100.0%;"><b>RASP_Prod_2</b><br>Zona: Tangancícuaro<br><b>Consumo</b>: 86.3 L/Ha<br><b>Diferencia</b>: -125.7 L</div>`)[0];
+                popup_a9618fcc800cfd5a612a08652103526c.setContent(html_a0a6d1bf5bb31966b8f21709ef422f55);
+            
+        
+
+        circle_marker_27b65c351678abae4cfa3276a865b539.bindPopup(popup_a9618fcc800cfd5a612a08652103526c)
+        ;
+
+        
+    
+    
+            var circle_marker_903810a33bae56c14c3fbda542ad8080 = L.circleMarker(
+                [20.2, -103.4],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_c46440d41a2512d793918d14f2bcf64a);
+        
+    
+        var popup_23bc1f5e1421998a41efd719bfa720db = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_d67def77feeb3c4257d40e4a4252ab2f = $(`<div id="html_d67def77feeb3c4257d40e4a4252ab2f" style="width: 100.0%; height: 100.0%;"><b>RASP_Prod_3</b><br>Zona: Tuxcueca<br><b>Consumo</b>: 83.1 L/Ha<br><b>Diferencia</b>: -128.9 L</div>`)[0];
+                popup_23bc1f5e1421998a41efd719bfa720db.setContent(html_d67def77feeb3c4257d40e4a4252ab2f);
+            
+        
+
+        circle_marker_903810a33bae56c14c3fbda542ad8080.bindPopup(popup_23bc1f5e1421998a41efd719bfa720db)
+        ;
+
+        
+    
+    
+            var circle_marker_34acd6d47224a9c23d1426334e50845e = L.circleMarker(
+                [20.2, -103.4],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_c46440d41a2512d793918d14f2bcf64a);
+        
+    
+        var popup_57a2067140f0e8b582487de30ff3c8f7 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_b36f065f151d94d4c95d9634135bf83b = $(`<div id="html_b36f065f151d94d4c95d9634135bf83b" style="width: 100.0%; height: 100.0%;"><b>RASP_Prod_4</b><br>Zona: Tuxcueca<br><b>Consumo</b>: 83.1 L/Ha<br><b>Diferencia</b>: -128.9 L</div>`)[0];
+                popup_57a2067140f0e8b582487de30ff3c8f7.setContent(html_b36f065f151d94d4c95d9634135bf83b);
+            
+        
+
+        circle_marker_34acd6d47224a9c23d1426334e50845e.bindPopup(popup_57a2067140f0e8b582487de30ff3c8f7)
+        ;
+
+        
+    
+    
+            var circle_marker_eb4c85c514e7f6ff746d92f1155fb7b3 = L.circleMarker(
+                [20.28, -103.43],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_c46440d41a2512d793918d14f2bcf64a);
+        
+    
+        var popup_9d090b72163b27f8329e6899584ad2d1 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_e12dd12deef43f0e302f3b5724b8ec66 = $(`<div id="html_e12dd12deef43f0e302f3b5724b8ec66" style="width: 100.0%; height: 100.0%;"><b>RASP_Prod_5</b><br>Zona: Jocotepec<br><b>Consumo</b>: 84.9 L/Ha<br><b>Diferencia</b>: -127.1 L</div>`)[0];
+                popup_9d090b72163b27f8329e6899584ad2d1.setContent(html_e12dd12deef43f0e302f3b5724b8ec66);
+            
+        
+
+        circle_marker_eb4c85c514e7f6ff746d92f1155fb7b3.bindPopup(popup_9d090b72163b27f8329e6899584ad2d1)
+        ;
+
+        
+    
+    
+            var circle_marker_e6ded2488ebedb96b6c31b3591307900 = L.circleMarker(
+                [19.7, -103.5],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_c46440d41a2512d793918d14f2bcf64a);
+        
+    
+        var popup_6b29ebc80b5d26f993ab5074174b47fe = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_b556a2cd16ca9a45e8bd9032966980ab = $(`<div id="html_b556a2cd16ca9a45e8bd9032966980ab" style="width: 100.0%; height: 100.0%;"><b>STRAW_Prod_1</b><br>Zona: Guzmán<br><b>Consumo</b>: 65.0 L/Ha<br><b>Diferencia</b>: -146.9 L</div>`)[0];
+                popup_6b29ebc80b5d26f993ab5074174b47fe.setContent(html_b556a2cd16ca9a45e8bd9032966980ab);
+            
+        
+
+        circle_marker_e6ded2488ebedb96b6c31b3591307900.bindPopup(popup_6b29ebc80b5d26f993ab5074174b47fe)
+        ;
+
+        
+    
+    
+            var circle_marker_db2ce81f3cb11e89ce860d3fc20ee303 = L.circleMarker(
+                [19.98, -102.28],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_c46440d41a2512d793918d14f2bcf64a);
+        
+    
+        var popup_70d639d8069fcb150123c25657550554 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_3a0c3e9815c38250a53b3ed9ec6a43b2 = $(`<div id="html_3a0c3e9815c38250a53b3ed9ec6a43b2" style="width: 100.0%; height: 100.0%;"><b>STRAW_Prod_2</b><br>Zona: Zamora<br><b>Consumo</b>: 64.6 L/Ha<br><b>Diferencia</b>: -147.4 L</div>`)[0];
+                popup_70d639d8069fcb150123c25657550554.setContent(html_3a0c3e9815c38250a53b3ed9ec6a43b2);
+            
+        
+
+        circle_marker_db2ce81f3cb11e89ce860d3fc20ee303.bindPopup(popup_70d639d8069fcb150123c25657550554)
+        ;
+
+        
+    
+    
+            var circle_marker_03e1606a27d6fa209e38b4549bdb8c84 = L.circleMarker(
+                [19.88, -102.22],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_c46440d41a2512d793918d14f2bcf64a);
+        
+    
+        var popup_67af431ad7ecdf573d3c23591e7b267d = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_f361fed9d4500525b6925fbeaa45e259 = $(`<div id="html_f361fed9d4500525b6925fbeaa45e259" style="width: 100.0%; height: 100.0%;"><b>STRAW_Prod_3</b><br>Zona: Tangancícuaro<br><b>Consumo</b>: 64.7 L/Ha<br><b>Diferencia</b>: -147.2 L</div>`)[0];
+                popup_67af431ad7ecdf573d3c23591e7b267d.setContent(html_f361fed9d4500525b6925fbeaa45e259);
+            
+        
+
+        circle_marker_03e1606a27d6fa209e38b4549bdb8c84.bindPopup(popup_67af431ad7ecdf573d3c23591e7b267d)
+        ;
+
+        
+    
+    
+            var circle_marker_2c4e9a489c9db8c9fa9d90fd990b935e = L.circleMarker(
+                [20.2, -103.4],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_c46440d41a2512d793918d14f2bcf64a);
+        
+    
+        var popup_0b76a80d6aaa8424783e71ff0e6d85d9 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_2c0db40439a51a4ed113041db805d7a9 = $(`<div id="html_2c0db40439a51a4ed113041db805d7a9" style="width: 100.0%; height: 100.0%;"><b>STRAW_Prod_4</b><br>Zona: Tuxcueca<br><b>Consumo</b>: 64.9 L/Ha<br><b>Diferencia</b>: -147.0 L</div>`)[0];
+                popup_0b76a80d6aaa8424783e71ff0e6d85d9.setContent(html_2c0db40439a51a4ed113041db805d7a9);
+            
+        
+
+        circle_marker_2c4e9a489c9db8c9fa9d90fd990b935e.bindPopup(popup_0b76a80d6aaa8424783e71ff0e6d85d9)
+        ;
+
+        
+    
+    
+            var circle_marker_47bde8387505588a520dde63cca01272 = L.circleMarker(
+                [19.98, -102.28],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_c46440d41a2512d793918d14f2bcf64a);
+        
+    
+        var popup_719d339c516184880fb2708377e0bcf3 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_0581168277df7c630c78a7613499ecc6 = $(`<div id="html_0581168277df7c630c78a7613499ecc6" style="width: 100.0%; height: 100.0%;"><b>STRAW_Prod_5</b><br>Zona: Zamora<br><b>Consumo</b>: 64.6 L/Ha<br><b>Diferencia</b>: -147.4 L</div>`)[0];
+                popup_719d339c516184880fb2708377e0bcf3.setContent(html_0581168277df7c630c78a7613499ecc6);
+            
+        
+
+        circle_marker_47bde8387505588a520dde63cca01272.bindPopup(popup_719d339c516184880fb2708377e0bcf3)
+        ;
+
+        
+    
+</script>
+</html>

@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_f6cb4d68fef77ed816f139664cf22708 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_f6cb4d68fef77ed816f139664cf22708" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_f6cb4d68fef77ed816f139664cf22708 = L.map(
+                "map_f6cb4d68fef77ed816f139664cf22708",
+                {
+                    center: [20.1, -103.3],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 7,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_0adebaff1267912f476a767d32cf071e = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_0adebaff1267912f476a767d32cf071e.addTo(map_f6cb4d68fef77ed816f139664cf22708);
+        
+    
+            var feature_group_6c8078854fc7c9487785426d350f3d7f = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_a41f7ac944c1fc88885f166afaf9fab4 = L.circleMarker(
+                [19.7, -103.5],
+                {"bubblingMouseEvents": true, "color": "#ff4100ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4100ff", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(feature_group_6c8078854fc7c9487785426d350f3d7f);
+        
+    
+        var popup_6069ed3be9835613b4cc58785c16dac2 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_4ebd433b595aab5e208d2549876971ee = $(`<div id="html_4ebd433b595aab5e208d2549876971ee" style="width: 100.0%; height: 100.0%;"><b>Zona:</b> Guzmán<br><b>Consumo:</b> 120.9 L/Ha<br><b>Ranking:</b> #3</div>`)[0];
+                popup_6069ed3be9835613b4cc58785c16dac2.setContent(html_4ebd433b595aab5e208d2549876971ee);
+            
+        
+
+        circle_marker_a41f7ac944c1fc88885f166afaf9fab4.bindPopup(popup_6069ed3be9835613b4cc58785c16dac2)
+        ;
+
+        
+    
+    
+            var circle_marker_289fc429233bf1547936e4a91277e955 = L.circleMarker(
+                [20.28, -103.43],
+                {"bubblingMouseEvents": true, "color": "#ffc100ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffc100ff", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(feature_group_6c8078854fc7c9487785426d350f3d7f);
+        
+    
+        var popup_41b9faa53c98ec96e7ebb3542548a809 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_37830dd6c548e7191cd4dcd34a1a20f3 = $(`<div id="html_37830dd6c548e7191cd4dcd34a1a20f3" style="width: 100.0%; height: 100.0%;"><b>Zona:</b> Jocotepec<br><b>Consumo:</b> 120.4 L/Ha<br><b>Ranking:</b> #2</div>`)[0];
+                popup_41b9faa53c98ec96e7ebb3542548a809.setContent(html_37830dd6c548e7191cd4dcd34a1a20f3);
+            
+        
+
+        circle_marker_289fc429233bf1547936e4a91277e955.bindPopup(popup_41b9faa53c98ec96e7ebb3542548a809)
+        ;
+
+        
+    
+    
+            var circle_marker_f149a06bf96ca09cdea6f232d0b9c6c4 = L.circleMarker(
+                [19.88, -102.22],
+                {"bubblingMouseEvents": true, "color": "#008000ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#008000ff", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(feature_group_6c8078854fc7c9487785426d350f3d7f);
+        
+    
+        var popup_06aa18504e0080bd6b4b6040dc4e8612 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_369ae6a62609e96c9b14caf4949b1983 = $(`<div id="html_369ae6a62609e96c9b14caf4949b1983" style="width: 100.0%; height: 100.0%;"><b>Zona:</b> Tangancícuaro<br><b>Consumo:</b> 119.2 L/Ha<br><b>Ranking:</b> #1</div>`)[0];
+                popup_06aa18504e0080bd6b4b6040dc4e8612.setContent(html_369ae6a62609e96c9b14caf4949b1983);
+            
+        
+
+        circle_marker_f149a06bf96ca09cdea6f232d0b9c6c4.bindPopup(popup_06aa18504e0080bd6b4b6040dc4e8612)
+        ;
+
+        
+    
+    
+            var circle_marker_63b2715721a7cce495ae6af1c42f488b = L.circleMarker(
+                [20.2, -103.4],
+                {"bubblingMouseEvents": true, "color": "#ff0000ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff0000ff", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(feature_group_6c8078854fc7c9487785426d350f3d7f);
+        
+    
+        var popup_b66f2bd4c6cb2519626b6c2a6aa2e28c = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_02571bad8fd54913899850a2972a6fb0 = $(`<div id="html_02571bad8fd54913899850a2972a6fb0" style="width: 100.0%; height: 100.0%;"><b>Zona:</b> Tuxcueca<br><b>Consumo:</b> 121.2 L/Ha<br><b>Ranking:</b> #4</div>`)[0];
+                popup_b66f2bd4c6cb2519626b6c2a6aa2e28c.setContent(html_02571bad8fd54913899850a2972a6fb0);
+            
+        
+
+        circle_marker_63b2715721a7cce495ae6af1c42f488b.bindPopup(popup_b66f2bd4c6cb2519626b6c2a6aa2e28c)
+        ;
+
+        
+    
+    
+            feature_group_6c8078854fc7c9487785426d350f3d7f.addTo(map_f6cb4d68fef77ed816f139664cf22708);
+        
+    
+            var feature_group_c519c768c0632e7d146749f4022a0ebe = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_a6422979cd94879e45eef3d493b383bb = L.circleMarker(
+                [19.7, -103.5],
+                {"bubblingMouseEvents": true, "color": "#ff0000ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff0000ff", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(feature_group_c519c768c0632e7d146749f4022a0ebe);
+        
+    
+        var popup_3b0fc89ad4fe9c05ab53c9457f3c1bdf = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_e6e263b9a6746606bb23e04bc0ddfbed = $(`<div id="html_e6e263b9a6746606bb23e04bc0ddfbed" style="width: 100.0%; height: 100.0%;"><b>Zona:</b> Guzmán<br><b>Consumo:</b> 65.0 L/Ha<br><b>Ranking:</b> #4</div>`)[0];
+                popup_3b0fc89ad4fe9c05ab53c9457f3c1bdf.setContent(html_e6e263b9a6746606bb23e04bc0ddfbed);
+            
+        
+
+        circle_marker_a6422979cd94879e45eef3d493b383bb.bindPopup(popup_3b0fc89ad4fe9c05ab53c9457f3c1bdf)
+        ;
+
+        
+    
+    
+            var circle_marker_fcc7842cab9193c23e3cd114035a0679 = L.circleMarker(
+                [19.88, -102.22],
+                {"bubblingMouseEvents": true, "color": "#abd500ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#abd500ff", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(feature_group_c519c768c0632e7d146749f4022a0ebe);
+        
+    
+        var popup_1d6be3f9c744f464b604d1bc6fd3d667 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_617bb08531ff7193c88d1d8ce737b367 = $(`<div id="html_617bb08531ff7193c88d1d8ce737b367" style="width: 100.0%; height: 100.0%;"><b>Zona:</b> Tangancícuaro<br><b>Consumo:</b> 64.7 L/Ha<br><b>Ranking:</b> #2</div>`)[0];
+                popup_1d6be3f9c744f464b604d1bc6fd3d667.setContent(html_617bb08531ff7193c88d1d8ce737b367);
+            
+        
+
+        circle_marker_fcc7842cab9193c23e3cd114035a0679.bindPopup(popup_1d6be3f9c744f464b604d1bc6fd3d667)
+        ;
+
+        
+    
+    
+            var circle_marker_598498da7955706ca5c41118edaef896 = L.circleMarker(
+                [20.2, -103.4],
+                {"bubblingMouseEvents": true, "color": "#ff4600ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4600ff", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(feature_group_c519c768c0632e7d146749f4022a0ebe);
+        
+    
+        var popup_a13a9400bf101aeb434c8634838dcd21 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_3a86af87f95f12a4996d266f2a545509 = $(`<div id="html_3a86af87f95f12a4996d266f2a545509" style="width: 100.0%; height: 100.0%;"><b>Zona:</b> Tuxcueca<br><b>Consumo:</b> 64.9 L/Ha<br><b>Ranking:</b> #3</div>`)[0];
+                popup_a13a9400bf101aeb434c8634838dcd21.setContent(html_3a86af87f95f12a4996d266f2a545509);
+            
+        
+
+        circle_marker_598498da7955706ca5c41118edaef896.bindPopup(popup_a13a9400bf101aeb434c8634838dcd21)
+        ;
+
+        
+    
+    
+            var circle_marker_824436138380ebd54962cc044765195a = L.circleMarker(
+                [19.98, -102.28],
+                {"bubblingMouseEvents": true, "color": "#008000ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#008000ff", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(feature_group_c519c768c0632e7d146749f4022a0ebe);
+        
+    
+        var popup_027ce5f79bb19f4902eed8854f27cc4b = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_32a8ff2208810afa056e0975e2940716 = $(`<div id="html_32a8ff2208810afa056e0975e2940716" style="width: 100.0%; height: 100.0%;"><b>Zona:</b> Zamora<br><b>Consumo:</b> 64.6 L/Ha<br><b>Ranking:</b> #1</div>`)[0];
+                popup_027ce5f79bb19f4902eed8854f27cc4b.setContent(html_32a8ff2208810afa056e0975e2940716);
+            
+        
+
+        circle_marker_824436138380ebd54962cc044765195a.bindPopup(popup_027ce5f79bb19f4902eed8854f27cc4b)
+        ;
+
+        
+    
+    
+            feature_group_c519c768c0632e7d146749f4022a0ebe.addTo(map_f6cb4d68fef77ed816f139664cf22708);
+        
+    
+            var feature_group_3928fddbd00ee2089ef370486aaf8d66 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_7906dbd4bcb5e73accb0401a1294fccd = L.circleMarker(
+                [20.28, -103.43],
+                {"bubblingMouseEvents": true, "color": "#ff0000ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff0000ff", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(feature_group_3928fddbd00ee2089ef370486aaf8d66);
+        
+    
+        var popup_4bdd73f56a19f0400f03d51fe3e37794 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_88ccdc70afee5917dc76f764c677f9c4 = $(`<div id="html_88ccdc70afee5917dc76f764c677f9c4" style="width: 100.0%; height: 100.0%;"><b>Zona:</b> Jocotepec<br><b>Consumo:</b> 103.5 L/Ha<br><b>Ranking:</b> #4</div>`)[0];
+                popup_4bdd73f56a19f0400f03d51fe3e37794.setContent(html_88ccdc70afee5917dc76f764c677f9c4);
+            
+        
+
+        circle_marker_7906dbd4bcb5e73accb0401a1294fccd.bindPopup(popup_4bdd73f56a19f0400f03d51fe3e37794)
+        ;
+
+        
+    
+    
+            var circle_marker_b5eaded230986b690190b83792f65c4c = L.circleMarker(
+                [19.88, -102.22],
+                {"bubblingMouseEvents": true, "color": "#008000ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#008000ff", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(feature_group_3928fddbd00ee2089ef370486aaf8d66);
+        
+    
+        var popup_c019537359f51e512388cade41c49cb4 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_9bc482b73b01ea965a644d8eb1140361 = $(`<div id="html_9bc482b73b01ea965a644d8eb1140361" style="width: 100.0%; height: 100.0%;"><b>Zona:</b> Tangancícuaro<br><b>Consumo:</b> 98.9 L/Ha<br><b>Ranking:</b> #1</div>`)[0];
+                popup_c019537359f51e512388cade41c49cb4.setContent(html_9bc482b73b01ea965a644d8eb1140361);
+            
+        
+
+        circle_marker_b5eaded230986b690190b83792f65c4c.bindPopup(popup_c019537359f51e512388cade41c49cb4)
+        ;
+
+        
+    
+    
+            var circle_marker_352e1748ef339f09a5a33682e6b06255 = L.circleMarker(
+                [20.2, -103.4],
+                {"bubblingMouseEvents": true, "color": "#ffab00ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffab00ff", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(feature_group_3928fddbd00ee2089ef370486aaf8d66);
+        
+    
+        var popup_a8646a69e85b2d0b4febfb8c3b616769 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_79616ba0db77af9a1c8ed13cec15d0e7 = $(`<div id="html_79616ba0db77af9a1c8ed13cec15d0e7" style="width: 100.0%; height: 100.0%;"><b>Zona:</b> Tuxcueca<br><b>Consumo:</b> 102.0 L/Ha<br><b>Ranking:</b> #2</div>`)[0];
+                popup_a8646a69e85b2d0b4febfb8c3b616769.setContent(html_79616ba0db77af9a1c8ed13cec15d0e7);
+            
+        
+
+        circle_marker_352e1748ef339f09a5a33682e6b06255.bindPopup(popup_a8646a69e85b2d0b4febfb8c3b616769)
+        ;
+
+        
+    
+    
+            var circle_marker_706dda9e696fd1ad1adc7244f1fffe11 = L.circleMarker(
+                [19.98, -102.28],
+                {"bubblingMouseEvents": true, "color": "#ff7900ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff7900ff", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(feature_group_3928fddbd00ee2089ef370486aaf8d66);
+        
+    
+        var popup_3e05277a1515f1f14932fa610f5e6f18 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_ed798c74d744f7bd68c67622b76be3e5 = $(`<div id="html_ed798c74d744f7bd68c67622b76be3e5" style="width: 100.0%; height: 100.0%;"><b>Zona:</b> Zamora<br><b>Consumo:</b> 102.4 L/Ha<br><b>Ranking:</b> #3</div>`)[0];
+                popup_3e05277a1515f1f14932fa610f5e6f18.setContent(html_ed798c74d744f7bd68c67622b76be3e5);
+            
+        
+
+        circle_marker_706dda9e696fd1ad1adc7244f1fffe11.bindPopup(popup_3e05277a1515f1f14932fa610f5e6f18)
+        ;
+
+        
+    
+    
+            feature_group_3928fddbd00ee2089ef370486aaf8d66.addTo(map_f6cb4d68fef77ed816f139664cf22708);
+        
+    
+            var feature_group_b4d15c446e0c21a1d5610bf419f0fd5a = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_28b3a4fec486a01f6ab2e35ff12624fa = L.circleMarker(
+                [20.28, -103.43],
+                {"bubblingMouseEvents": true, "color": "#ffe400ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffe400ff", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(feature_group_b4d15c446e0c21a1d5610bf419f0fd5a);
+        
+    
+        var popup_fce5853a42066c15a5b4bb3bd8ed63e4 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_60ec9d1cd9069126e9e757e52f62b4de = $(`<div id="html_60ec9d1cd9069126e9e757e52f62b4de" style="width: 100.0%; height: 100.0%;"><b>Zona:</b> Jocotepec<br><b>Consumo:</b> 84.9 L/Ha<br><b>Ranking:</b> #3</div>`)[0];
+                popup_fce5853a42066c15a5b4bb3bd8ed63e4.setContent(html_60ec9d1cd9069126e9e757e52f62b4de);
+            
+        
+
+        circle_marker_28b3a4fec486a01f6ab2e35ff12624fa.bindPopup(popup_fce5853a42066c15a5b4bb3bd8ed63e4)
+        ;
+
+        
+    
+    
+            var circle_marker_bc1dbde7a7c4b580c29f9563cfc3f337 = L.circleMarker(
+                [19.88, -102.22],
+                {"bubblingMouseEvents": true, "color": "#ff0000ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff0000ff", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(feature_group_b4d15c446e0c21a1d5610bf419f0fd5a);
+        
+    
+        var popup_717e08321ec029f3bd3449207a1ec9f3 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_75ade3999efc5a4b049c0db831a00b8e = $(`<div id="html_75ade3999efc5a4b049c0db831a00b8e" style="width: 100.0%; height: 100.0%;"><b>Zona:</b> Tangancícuaro<br><b>Consumo:</b> 86.3 L/Ha<br><b>Ranking:</b> #4</div>`)[0];
+                popup_717e08321ec029f3bd3449207a1ec9f3.setContent(html_75ade3999efc5a4b049c0db831a00b8e);
+            
+        
+
+        circle_marker_bc1dbde7a7c4b580c29f9563cfc3f337.bindPopup(popup_717e08321ec029f3bd3449207a1ec9f3)
+        ;
+
+        
+    
+    
+            var circle_marker_c093dec1b7c2137a9fa582b104059f7d = L.circleMarker(
+                [20.2, -103.4],
+                {"bubblingMouseEvents": true, "color": "#008000ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#008000ff", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(feature_group_b4d15c446e0c21a1d5610bf419f0fd5a);
+        
+    
+        var popup_2307fbd3e19de56489962297a6ee2067 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_9951f43984e62845be0b101a3a1d8356 = $(`<div id="html_9951f43984e62845be0b101a3a1d8356" style="width: 100.0%; height: 100.0%;"><b>Zona:</b> Tuxcueca<br><b>Consumo:</b> 83.1 L/Ha<br><b>Ranking:</b> #1</div>`)[0];
+                popup_2307fbd3e19de56489962297a6ee2067.setContent(html_9951f43984e62845be0b101a3a1d8356);
+            
+        
+
+        circle_marker_c093dec1b7c2137a9fa582b104059f7d.bindPopup(popup_2307fbd3e19de56489962297a6ee2067)
+        ;
+
+        
+    
+    
+            var circle_marker_e3c957921cceebc4bca77e7ebdb7b0bb = L.circleMarker(
+                [19.98, -102.28],
+                {"bubblingMouseEvents": true, "color": "#309800ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#309800ff", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(feature_group_b4d15c446e0c21a1d5610bf419f0fd5a);
+        
+    
+        var popup_81e1abcecf79087c779d44a79cb7a9a5 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_ba340c76203933903799291de774242d = $(`<div id="html_ba340c76203933903799291de774242d" style="width: 100.0%; height: 100.0%;"><b>Zona:</b> Zamora<br><b>Consumo:</b> 83.4 L/Ha<br><b>Ranking:</b> #2</div>`)[0];
+                popup_81e1abcecf79087c779d44a79cb7a9a5.setContent(html_ba340c76203933903799291de774242d);
+            
+        
+
+        circle_marker_e3c957921cceebc4bca77e7ebdb7b0bb.bindPopup(popup_81e1abcecf79087c779d44a79cb7a9a5)
+        ;
+
+        
+    
+    
+            feature_group_b4d15c446e0c21a1d5610bf419f0fd5a.addTo(map_f6cb4d68fef77ed816f139664cf22708);
+        
+    
+            var layer_control_097e1db8de3281c05b57a1cb5193f2e3_layers = {
+                base_layers : {
+                    "openstreetmap" : tile_layer_0adebaff1267912f476a767d32cf071e,
+                },
+                overlays :  {
+                    "BLUE" : feature_group_6c8078854fc7c9487785426d350f3d7f,
+                    "STRAW" : feature_group_c519c768c0632e7d146749f4022a0ebe,
+                    "BLACK" : feature_group_3928fddbd00ee2089ef370486aaf8d66,
+                    "RASP" : feature_group_b4d15c446e0c21a1d5610bf419f0fd5a,
+                },
+            };
+            let layer_control_097e1db8de3281c05b57a1cb5193f2e3 = L.control.layers(
+                layer_control_097e1db8de3281c05b57a1cb5193f2e3_layers.base_layers,
+                layer_control_097e1db8de3281c05b57a1cb5193f2e3_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": false,
+  "autoZIndex": true,
+}
+            ).addTo(map_f6cb4d68fef77ed816f139664cf22708);
+
+        
+</script>
+</html>

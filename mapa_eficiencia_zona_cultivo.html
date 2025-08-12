@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_cb46b14ba618f290150a9f22b84a46dc {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_cb46b14ba618f290150a9f22b84a46dc" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_cb46b14ba618f290150a9f22b84a46dc = L.map(
+                "map_cb46b14ba618f290150a9f22b84a46dc",
+                {
+                    center: [20.1, -103.3],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 7,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_6960c3a10d70ba8e85ae71fd5cdbee59 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_6960c3a10d70ba8e85ae71fd5cdbee59.addTo(map_cb46b14ba618f290150a9f22b84a46dc);
+        
+    
+            var circle_marker_a25b1de53a4a193dc98601de43b1c191 = L.circleMarker(
+                [19.7, -103.5],
+                {"bubblingMouseEvents": true, "color": "#ff0200ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff0200ff", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_cb46b14ba618f290150a9f22b84a46dc);
+        
+    
+        var popup_c3b5a4664a9f914cd8c9fd09aa8425f5 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_79f2551a01e58a753f61a33f71656edc = $(`<div id="html_79f2551a01e58a753f61a33f71656edc" style="width: 100.0%; height: 100.0%;"><b>Zona:</b> Guzmán<br><b>Cultivo:</b> BLUE<br><b>Consumo promedio:</b> 120.9 L/Ha</div>`)[0];
+                popup_c3b5a4664a9f914cd8c9fd09aa8425f5.setContent(html_79f2551a01e58a753f61a33f71656edc);
+            
+        
+
+        circle_marker_a25b1de53a4a193dc98601de43b1c191.bindPopup(popup_c3b5a4664a9f914cd8c9fd09aa8425f5)
+        ;
+
+        
+    
+    
+            var circle_marker_33384949e249ce4a7f1a6920e46d67db = L.circleMarker(
+                [19.7, -103.5],
+                {"bubblingMouseEvents": true, "color": "#048200ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#048200ff", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_cb46b14ba618f290150a9f22b84a46dc);
+        
+    
+        var popup_fb876a729e69761da24252a23630049c = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_ee4eda8556d00ef5191a433bd9714900 = $(`<div id="html_ee4eda8556d00ef5191a433bd9714900" style="width: 100.0%; height: 100.0%;"><b>Zona:</b> Guzmán<br><b>Cultivo:</b> STRAW<br><b>Consumo promedio:</b> 65.0 L/Ha</div>`)[0];
+                popup_fb876a729e69761da24252a23630049c.setContent(html_ee4eda8556d00ef5191a433bd9714900);
+            
+        
+
+        circle_marker_33384949e249ce4a7f1a6920e46d67db.bindPopup(popup_fb876a729e69761da24252a23630049c)
+        ;
+
+        
+    
+    
+            var circle_marker_24db71e439165a14962df6ec75001a0b = L.circleMarker(
+                [20.28, -103.43],
+                {"bubblingMouseEvents": true, "color": "#ff9f00ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff9f00ff", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_cb46b14ba618f290150a9f22b84a46dc);
+        
+    
+        var popup_2196d81cc8a30ffae598eafb067fd698 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_bdf8fadf63b262649f8600ba7af56c41 = $(`<div id="html_bdf8fadf63b262649f8600ba7af56c41" style="width: 100.0%; height: 100.0%;"><b>Zona:</b> Jocotepec<br><b>Cultivo:</b> BLACK<br><b>Consumo promedio:</b> 103.5 L/Ha</div>`)[0];
+                popup_2196d81cc8a30ffae598eafb067fd698.setContent(html_bdf8fadf63b262649f8600ba7af56c41);
+            
+        
+
+        circle_marker_24db71e439165a14962df6ec75001a0b.bindPopup(popup_2196d81cc8a30ffae598eafb067fd698)
+        ;
+
+        
+    
+    
+            var circle_marker_939e75f1c775826bb06ae82f1df7e971 = L.circleMarker(
+                [20.28, -103.43],
+                {"bubblingMouseEvents": true, "color": "#ff0600ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff0600ff", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_cb46b14ba618f290150a9f22b84a46dc);
+        
+    
+        var popup_ae3fa9b3b13609750e9c0c7779a1af93 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_d018f596132982c737c555a193109364 = $(`<div id="html_d018f596132982c737c555a193109364" style="width: 100.0%; height: 100.0%;"><b>Zona:</b> Jocotepec<br><b>Cultivo:</b> BLUE<br><b>Consumo promedio:</b> 120.4 L/Ha</div>`)[0];
+                popup_ae3fa9b3b13609750e9c0c7779a1af93.setContent(html_d018f596132982c737c555a193109364);
+            
+        
+
+        circle_marker_939e75f1c775826bb06ae82f1df7e971.bindPopup(popup_ae3fa9b3b13609750e9c0c7779a1af93)
+        ;
+
+        
+    
+    
+            var circle_marker_d05bd6a1f140438dbb09bc1be1103d31 = L.circleMarker(
+                [20.28, -103.43],
+                {"bubblingMouseEvents": true, "color": "#b7db00ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#b7db00ff", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_cb46b14ba618f290150a9f22b84a46dc);
+        
+    
+        var popup_388cf6b54d54366b452998ee8ca51a54 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_60b2aad6311982fd1e2a5ffee9c8f120 = $(`<div id="html_60b2aad6311982fd1e2a5ffee9c8f120" style="width: 100.0%; height: 100.0%;"><b>Zona:</b> Jocotepec<br><b>Cultivo:</b> RASP<br><b>Consumo promedio:</b> 84.9 L/Ha</div>`)[0];
+                popup_388cf6b54d54366b452998ee8ca51a54.setContent(html_60b2aad6311982fd1e2a5ffee9c8f120);
+            
+        
+
+        circle_marker_d05bd6a1f140438dbb09bc1be1103d31.bindPopup(popup_388cf6b54d54366b452998ee8ca51a54)
+        ;
+
+        
+    
+    
+            var circle_marker_df0e7fdf95b021dea227c53356d17e2f = L.circleMarker(
+                [19.88, -102.22],
+                {"bubblingMouseEvents": true, "color": "#ffc900ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffc900ff", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_cb46b14ba618f290150a9f22b84a46dc);
+        
+    
+        var popup_fdd79ba450af2a44b6bb035da61a9d55 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_2163995b4e1641ab883aa3013072edd8 = $(`<div id="html_2163995b4e1641ab883aa3013072edd8" style="width: 100.0%; height: 100.0%;"><b>Zona:</b> Tangancícuaro<br><b>Cultivo:</b> BLACK<br><b>Consumo promedio:</b> 98.9 L/Ha</div>`)[0];
+                popup_fdd79ba450af2a44b6bb035da61a9d55.setContent(html_2163995b4e1641ab883aa3013072edd8);
+            
+        
+
+        circle_marker_df0e7fdf95b021dea227c53356d17e2f.bindPopup(popup_fdd79ba450af2a44b6bb035da61a9d55)
+        ;
+
+        
+    
+    
+            var circle_marker_9e2e15f46a8e7428478e31b873955cfa = L.circleMarker(
+                [19.88, -102.22],
+                {"bubblingMouseEvents": true, "color": "#ff1100ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff1100ff", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_cb46b14ba618f290150a9f22b84a46dc);
+        
+    
+        var popup_702030730eec1a83845fb6ad20c3fda8 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9f20953b73c6b9876d923bda91761081 = $(`<div id="html_9f20953b73c6b9876d923bda91761081" style="width: 100.0%; height: 100.0%;"><b>Zona:</b> Tangancícuaro<br><b>Cultivo:</b> BLUE<br><b>Consumo promedio:</b> 119.2 L/Ha</div>`)[0];
+                popup_702030730eec1a83845fb6ad20c3fda8.setContent(html_9f20953b73c6b9876d923bda91761081);
+            
+        
+
+        circle_marker_9e2e15f46a8e7428478e31b873955cfa.bindPopup(popup_702030730eec1a83845fb6ad20c3fda8)
+        ;
+
+        
+    
+    
+            var circle_marker_f454e05b4f223c995bb309a9fb8a09f4 = L.circleMarker(
+                [19.88, -102.22],
+                {"bubblingMouseEvents": true, "color": "#c4e200ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#c4e200ff", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_cb46b14ba618f290150a9f22b84a46dc);
+        
+    
+        var popup_e87bae0ef13ffb6dbc4d84b9fb869461 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_5c3df5d1c2be107bc55e41fa0a176d67 = $(`<div id="html_5c3df5d1c2be107bc55e41fa0a176d67" style="width: 100.0%; height: 100.0%;"><b>Zona:</b> Tangancícuaro<br><b>Cultivo:</b> RASP<br><b>Consumo promedio:</b> 86.3 L/Ha</div>`)[0];
+                popup_e87bae0ef13ffb6dbc4d84b9fb869461.setContent(html_5c3df5d1c2be107bc55e41fa0a176d67);
+            
+        
+
+        circle_marker_f454e05b4f223c995bb309a9fb8a09f4.bindPopup(popup_e87bae0ef13ffb6dbc4d84b9fb869461)
+        ;
+
+        
+    
+    
+            var circle_marker_67542dcc2c828cd80a53a8bb39b70afa = L.circleMarker(
+                [19.88, -102.22],
+                {"bubblingMouseEvents": true, "color": "#018100ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#018100ff", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_cb46b14ba618f290150a9f22b84a46dc);
+        
+    
+        var popup_d79c59efed0be77ba3351b116238b26a = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_92abf60e89fd3e5ccb2a02c19075b8a0 = $(`<div id="html_92abf60e89fd3e5ccb2a02c19075b8a0" style="width: 100.0%; height: 100.0%;"><b>Zona:</b> Tangancícuaro<br><b>Cultivo:</b> STRAW<br><b>Consumo promedio:</b> 64.7 L/Ha</div>`)[0];
+                popup_d79c59efed0be77ba3351b116238b26a.setContent(html_92abf60e89fd3e5ccb2a02c19075b8a0);
+            
+        
+
+        circle_marker_67542dcc2c828cd80a53a8bb39b70afa.bindPopup(popup_d79c59efed0be77ba3351b116238b26a)
+        ;
+
+        
+    
+    
+            var circle_marker_bf59969fcdfab00c5a3bb4c1425d0966 = L.circleMarker(
+                [20.2, -103.4],
+                {"bubblingMouseEvents": true, "color": "#ffad00ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffad00ff", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_cb46b14ba618f290150a9f22b84a46dc);
+        
+    
+        var popup_6c744530331444f9b1fbe3fd1ef89b1b = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_a45c70337082a9f468095b3501e94cee = $(`<div id="html_a45c70337082a9f468095b3501e94cee" style="width: 100.0%; height: 100.0%;"><b>Zona:</b> Tuxcueca<br><b>Cultivo:</b> BLACK<br><b>Consumo promedio:</b> 102.0 L/Ha</div>`)[0];
+                popup_6c744530331444f9b1fbe3fd1ef89b1b.setContent(html_a45c70337082a9f468095b3501e94cee);
+            
+        
+
+        circle_marker_bf59969fcdfab00c5a3bb4c1425d0966.bindPopup(popup_6c744530331444f9b1fbe3fd1ef89b1b)
+        ;
+
+        
+    
+    
+            var circle_marker_48f418a6a32eb997a78fcb17464b275b = L.circleMarker(
+                [20.2, -103.4],
+                {"bubblingMouseEvents": true, "color": "#ff0000ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff0000ff", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_cb46b14ba618f290150a9f22b84a46dc);
+        
+    
+        var popup_aefef2a950d9df18846d4cc82243aa2a = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_2f29429f369b722d44f88dd149396a51 = $(`<div id="html_2f29429f369b722d44f88dd149396a51" style="width: 100.0%; height: 100.0%;"><b>Zona:</b> Tuxcueca<br><b>Cultivo:</b> BLUE<br><b>Consumo promedio:</b> 121.2 L/Ha</div>`)[0];
+                popup_aefef2a950d9df18846d4cc82243aa2a.setContent(html_2f29429f369b722d44f88dd149396a51);
+            
+        
+
+        circle_marker_48f418a6a32eb997a78fcb17464b275b.bindPopup(popup_aefef2a950d9df18846d4cc82243aa2a)
+        ;
+
+        
+    
+    
+            var circle_marker_363208d350323c620fc3069606142024 = L.circleMarker(
+                [20.2, -103.4],
+                {"bubblingMouseEvents": true, "color": "#a7d400ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#a7d400ff", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_cb46b14ba618f290150a9f22b84a46dc);
+        
+    
+        var popup_f45d9b2fc9ef656ca31f9f3f4644f14b = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_cebffe742fd983682075254ec037def5 = $(`<div id="html_cebffe742fd983682075254ec037def5" style="width: 100.0%; height: 100.0%;"><b>Zona:</b> Tuxcueca<br><b>Cultivo:</b> RASP<br><b>Consumo promedio:</b> 83.1 L/Ha</div>`)[0];
+                popup_f45d9b2fc9ef656ca31f9f3f4644f14b.setContent(html_cebffe742fd983682075254ec037def5);
+            
+        
+
+        circle_marker_363208d350323c620fc3069606142024.bindPopup(popup_f45d9b2fc9ef656ca31f9f3f4644f14b)
+        ;
+
+        
+    
+    
+            var circle_marker_7b5d85f224302a0462e4eb2505145f2e = L.circleMarker(
+                [20.2, -103.4],
+                {"bubblingMouseEvents": true, "color": "#038200ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#038200ff", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_cb46b14ba618f290150a9f22b84a46dc);
+        
+    
+        var popup_b16eece2e52db0d7ac30ccf3236b1a51 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_be20293807391bdac9851155b616fbb7 = $(`<div id="html_be20293807391bdac9851155b616fbb7" style="width: 100.0%; height: 100.0%;"><b>Zona:</b> Tuxcueca<br><b>Cultivo:</b> STRAW<br><b>Consumo promedio:</b> 64.9 L/Ha</div>`)[0];
+                popup_b16eece2e52db0d7ac30ccf3236b1a51.setContent(html_be20293807391bdac9851155b616fbb7);
+            
+        
+
+        circle_marker_7b5d85f224302a0462e4eb2505145f2e.bindPopup(popup_b16eece2e52db0d7ac30ccf3236b1a51)
+        ;
+
+        
+    
+    
+            var circle_marker_8dcd05e9acc1229c85a2a37fc20a922d = L.circleMarker(
+                [19.98, -102.28],
+                {"bubblingMouseEvents": true, "color": "#ffa900ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffa900ff", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_cb46b14ba618f290150a9f22b84a46dc);
+        
+    
+        var popup_08bff9744281ea35a859ed9c0e0ae496 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_fed24a53b6de7599834e30a02d18f684 = $(`<div id="html_fed24a53b6de7599834e30a02d18f684" style="width: 100.0%; height: 100.0%;"><b>Zona:</b> Zamora<br><b>Cultivo:</b> BLACK<br><b>Consumo promedio:</b> 102.4 L/Ha</div>`)[0];
+                popup_08bff9744281ea35a859ed9c0e0ae496.setContent(html_fed24a53b6de7599834e30a02d18f684);
+            
+        
+
+        circle_marker_8dcd05e9acc1229c85a2a37fc20a922d.bindPopup(popup_08bff9744281ea35a859ed9c0e0ae496)
+        ;
+
+        
+    
+    
+            var circle_marker_eae7f7222103cf780b3de604b130d9a9 = L.circleMarker(
+                [19.98, -102.28],
+                {"bubblingMouseEvents": true, "color": "#aad500ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#aad500ff", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_cb46b14ba618f290150a9f22b84a46dc);
+        
+    
+        var popup_34421b93d1aac29e6139258fb93088de = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_d265cb3bf3ebf60a3152eab66be13509 = $(`<div id="html_d265cb3bf3ebf60a3152eab66be13509" style="width: 100.0%; height: 100.0%;"><b>Zona:</b> Zamora<br><b>Cultivo:</b> RASP<br><b>Consumo promedio:</b> 83.4 L/Ha</div>`)[0];
+                popup_34421b93d1aac29e6139258fb93088de.setContent(html_d265cb3bf3ebf60a3152eab66be13509);
+            
+        
+
+        circle_marker_eae7f7222103cf780b3de604b130d9a9.bindPopup(popup_34421b93d1aac29e6139258fb93088de)
+        ;
+
+        
+    
+    
+            var circle_marker_468a08d9992b9193077128a85fa4add4 = L.circleMarker(
+                [19.98, -102.28],
+                {"bubblingMouseEvents": true, "color": "#008000ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#008000ff", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_cb46b14ba618f290150a9f22b84a46dc);
+        
+    
+        var popup_cc7d2634095b5f3f3c8c4e4000acf7ca = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_2f798ca5f6460cf5995d4b2d71f66a8d = $(`<div id="html_2f798ca5f6460cf5995d4b2d71f66a8d" style="width: 100.0%; height: 100.0%;"><b>Zona:</b> Zamora<br><b>Cultivo:</b> STRAW<br><b>Consumo promedio:</b> 64.6 L/Ha</div>`)[0];
+                popup_cc7d2634095b5f3f3c8c4e4000acf7ca.setContent(html_2f798ca5f6460cf5995d4b2d71f66a8d);
+            
+        
+
+        circle_marker_468a08d9992b9193077128a85fa4add4.bindPopup(popup_cc7d2634095b5f3f3c8c4e4000acf7ca)
+        ;
+
+        
+    
+    
+    var color_map_e4c82ade3642c7ba9d58160da20fde99 = {};
+
+    
+    color_map_e4c82ade3642c7ba9d58160da20fde99.color = d3.scale.threshold()
+              .domain([64.5550334920635, 64.66850134554825, 64.781969199033, 64.89543705251775, 65.00890490600248, 65.12237275948723, 65.23584061297198, 65.34930846645673, 65.46277631994148, 65.57624417342623, 65.68971202691097, 65.80317988039572, 65.91664773388047, 66.03011558736522, 66.14358344084997, 66.25705129433472, 66.37051914781945, 66.4839870013042, 66.59745485478895, 66.7109227082737, 66.82439056175845, 66.9378584152432, 67.05132626872793, 67.16479412221268, 67.27826197569743, 67.39172982918218, 67.50519768266693, 67.61866553615168, 67.73213338963643, 67.84560124312117, 67.95906909660592, 68.07253695009067, 68.18600480357541, 68.29947265706016, 68.41294051054491, 68.52640836402965, 68.6398762175144, 68.75334407099915, 68.8668119244839, 68.98027977796865, 69.0937476314534, 69.20721548493813, 69.32068333842288, 69.43415119190763, 69.54761904539238, 69.66108689887713, 69.77455475236188, 69.88802260584663, 70.00149045933136, 70.11495831281611, 70.22842616630086, 70.34189401978561, 70.45536187327036, 70.5688297267551, 70.68229758023985, 70.7957654337246, 70.90923328720935, 71.0227011406941, 71.13616899417885, 71.2496368476636, 71.36310470114833, 71.47657255463308, 71.59004040811783, 71.70350826160258, 71.81697611508733, 71.93044396857208, 72.04391182205681, 72.15737967554156, 72.27084752902631, 72.38431538251106, 72.49778323599581, 72.61125108948056, 72.7247189429653, 72.83818679645005, 72.9516546499348, 73.06512250341954, 73.1785903569043, 73.29205821038904, 73.4055260638738, 73.51899391735853, 73.63246177084328, 73.74592962432803, 73.85939747781278, 73.97286533129753, 74.08633318478226, 74.19980103826701, 74.31326889175176, 74.42673674523651, 74.54020459872126, 74.65367245220601, 74.76714030569076, 74.8806081591755, 74.99407601266024, 75.107543866145, 75.22101171962974, 75.33447957311449, 75.44794742659923, 75.56141528008399, 75.67488313356873, 75.78835098705348, 75.90181884053823, 76.01528669402298, 76.12875454750773, 76.24222240099246, 76.35569025447721, 76.46915810796196, 76.58262596144671, 76.69609381493146, 76.80956166841621, 76.92302952190096, 77.0364973753857, 77.14996522887044, 77.26343308235519, 77.37690093583994, 77.49036878932469, 77.60383664280943, 77.71730449629418, 77.83077234977893, 77.94424020326367, 78.05770805674842, 78.17117591023317, 78.28464376371792, 78.39811161720266, 78.51157947068741, 78.62504732417216, 78.73851517765691, 78.85198303114166, 78.9654508846264, 79.07891873811116, 79.19238659159589, 79.30585444508064, 79.41932229856539, 79.53279015205014, 79.64625800553489, 79.75972585901962, 79.87319371250437, 79.98666156598912, 80.10012941947387, 80.21359727295862, 80.32706512644337, 80.44053297992812, 80.55400083341286, 80.6674686868976, 80.78093654038236, 80.8944043938671, 81.00787224735186, 81.1213401008366, 81.23480795432135, 81.34827580780609, 81.46174366129084, 81.57521151477559, 81.68867936826034, 81.80214722174509, 81.91561507522982, 82.02908292871457, 82.14255078219932, 82.25601863568407, 82.36948648916882, 82.48295434265356, 82.59642219613832, 82.70989004962306, 82.8233579031078, 82.93682575659255, 83.0502936100773, 83.16376146356205, 83.27722931704679, 83.39069717053155, 83.50416502401629, 83.61763287750104, 83.73110073098579, 83.84456858447054, 83.95803643795529, 84.07150429144002, 84.18497214492477, 84.29843999840952, 84.41190785189427, 84.52537570537902, 84.63884355886375, 84.7523114123485, 84.86577926583325, 84.979247119318, 85.09271497280275, 85.2061828262875, 85.31965067977225, 85.43311853325699, 85.54658638674174, 85.66005424022649, 85.77352209371124, 85.88698994719599, 86.00045780068073, 86.11392565416548, 86.22739350765022, 86.34086136113497, 86.45432921461972, 86.56779706810447, 86.68126492158922, 86.79473277507395, 86.9082006285587, 87.02166848204345, 87.1351363355282, 87.24860418901295, 87.3620720424977, 87.47553989598245, 87.58900774946719, 87.70247560295194, 87.81594345643668, 87.92941130992143, 88.04287916340618, 88.15634701689093, 88.26981487037568, 88.38328272386042, 88.49675057734517, 88.61021843082992, 88.72368628431467, 88.83715413779942, 88.95062199128415, 89.0640898447689, 89.17755769825365, 89.2910255517384, 89.40449340522315, 89.5179612587079, 89.63142911219265, 89.74489696567738, 89.85836481916213, 89.97183267264688, 90.08530052613163, 90.19876837961638, 90.31223623310113, 90.42570408658588, 90.53917194007062, 90.65263979355537, 90.76610764704012, 90.87957550052487, 90.99304335400961, 91.10651120749435, 91.2199790609791, 91.33344691446385, 91.4469147679486, 91.56038262143335, 91.67385047491808, 91.78731832840285, 91.90078618188758, 92.01425403537233, 92.12772188885708, 92.24118974234183, 92.35465759582658, 92.46812544931133, 92.58159330279608, 92.69506115628081, 92.80852900976556, 92.92199686325031, 93.03546471673506, 93.14893257021981, 93.26240042370455, 93.3758682771893, 93.48933613067405, 93.6028039841588, 93.71627183764355, 93.82973969112828, 93.94320754461303, 94.05667539809778, 94.17014325158253, 94.28361110506728, 94.39707895855203, 94.51054681203678, 94.62401466552151, 94.73748251900626, 94.85095037249101, 94.96441822597576, 95.07788607946051, 95.19135393294526, 95.30482178643001, 95.41828963991475, 95.5317574933995, 95.64522534688425, 95.758693200369, 95.87216105385374, 95.98562890733848, 96.09909676082323, 96.21256461430798, 96.32603246779273, 96.43950032127748, 96.55296817476223, 96.66643602824698, 96.77990388173171, 96.89337173521646, 97.00683958870121, 97.12030744218596, 97.23377529567071, 97.34724314915545, 97.46071100264021, 97.57417885612495, 97.68764670960971, 97.80111456309444, 97.9145824165792, 98.02805027006394, 98.14151812354868, 98.25498597703344, 98.36845383051818, 98.48192168400293, 98.59538953748768, 98.70885739097243, 98.82232524445718, 98.93579309794191, 99.04926095142667, 99.16272880491141, 99.27619665839616, 99.38966451188091, 99.50313236536564, 99.6166002188504, 99.73006807233514, 99.84353592581991, 99.95700377930464, 100.07047163278939, 100.18393948627414, 100.29740733975888, 100.41087519324363, 100.52434304672838, 100.63781090021313, 100.75127875369787, 100.86474660718262, 100.97821446066737, 101.09168231415211, 101.20515016763686, 101.31861802112161, 101.43208587460636, 101.54555372809111, 101.65902158157584, 101.77248943506059, 101.88595728854534, 101.99942514203009, 102.11289299551484, 102.22636084899959, 102.33982870248434, 102.45329655596908, 102.56676440945382, 102.68023226293857, 102.79370011642332, 102.90716796990807, 103.02063582339282, 103.13410367687757, 103.24757153036231, 103.36103938384706, 103.4745072373318, 103.58797509081656, 103.7014429443013, 103.81491079778604, 103.92837865127079, 104.04184650475554, 104.15531435824029, 104.26878221172504, 104.38225006520979, 104.49571791869454, 104.60918577217927, 104.72265362566402, 104.83612147914877, 104.94958933263351, 105.06305718611827, 105.17652503960302, 105.28999289308777, 105.4034607465725, 105.51692860005726, 105.630396453542, 105.74386430702674, 105.8573321605115, 105.97080001399624, 106.08426786748099, 106.19773572096574, 106.31120357445049, 106.42467142793524, 106.53813928141997, 106.65160713490474, 106.76507498838947, 106.87854284187422, 106.99201069535897, 107.1054785488437, 107.21894640232847, 107.3324142558132, 107.44588210929797, 107.5593499627827, 107.67281781626745, 107.7862856697522, 107.89975352323694, 108.0132213767217, 108.12668923020644, 108.24015708369119, 108.35362493717594, 108.46709279066069, 108.58056064414544, 108.69402849763017, 108.80749635111493, 108.92096420459967, 109.03443205808442, 109.14789991156917, 109.2613677650539, 109.37483561853867, 109.4883034720234, 109.60177132550817, 109.7152391789929, 109.82870703247765, 109.9421748859624, 110.05564273944714, 110.1691105929319, 110.28257844641664, 110.39604629990139, 110.50951415338614, 110.62298200687088, 110.73644986035563, 110.84991771384037, 110.96338556732513, 111.07685342080987, 111.19032127429462, 111.30378912777937, 111.4172569812641, 111.53072483474887, 111.6441926882336, 111.75766054171837, 111.8711283952031, 111.98459624868785, 112.0980641021726, 112.21153195565734, 112.3249998091421, 112.43846766262683, 112.55193551611158, 112.66540336959633, 112.77887122308108, 112.89233907656583, 113.00580693005057, 113.11927478353533, 113.23274263702007, 113.34621049050482, 113.45967834398957, 113.5731461974743, 113.68661405095907, 113.8000819044438, 113.91354975792856, 114.0270176114133, 114.14048546489805, 114.2539533183828, 114.36742117186753, 114.4808890253523, 114.59435687883703, 114.70782473232178, 114.82129258580653, 114.93476043929128, 115.04822829277603, 115.16169614626077, 115.27516399974553, 115.38863185323027, 115.50209970671501, 115.61556756019976, 115.7290354136845, 115.84250326716926, 115.955971120654, 116.06943897413876, 116.1829068276235, 116.29637468110825, 116.409842534593, 116.52331038807773, 116.6367782415625, 116.75024609504723, 116.86371394853198, 116.97718180201673, 117.09064965550148, 117.20411750898623, 117.31758536247096, 117.43105321595573, 117.54452106944046, 117.65798892292521, 117.77145677640996, 117.8849246298947, 117.99839248337946, 118.1118603368642, 118.22532819034896, 118.3387960438337, 118.45226389731845, 118.5657317508032, 118.67919960428793, 118.79266745777268, 118.90613531125743, 119.01960316474218, 119.13307101822693, 119.24653887171168, 119.36000672519643, 119.47347457868116, 119.58694243216591, 119.70041028565066, 119.81387813913541, 119.92734599262016, 120.0408138461049, 120.15428169958966, 120.2677495530744, 120.38121740655916, 120.4946852600439, 120.60815311352864, 120.7216209670134, 120.83508882049813, 120.94855667398288, 121.06202452746763, 121.17549238095238])
+              .range(['#008000ff', '#018100ff', '#028100ff', '#038200ff', '#048200ff', '#058300ff', '#068300ff', '#078400ff', '#088400ff', '#098500ff', '#0a8500ff', '#0b8600ff', '#0c8600ff', '#0d8700ff', '#0e8700ff', '#0f8800ff', '#108800ff', '#118900ff', '#128900ff', '#138a00ff', '#148a00ff', '#158b00ff', '#168b00ff', '#178c00ff', '#188c00ff', '#198d00ff', '#1a8d00ff', '#1b8e00ff', '#1c8e00ff', '#1d8f00ff', '#1e8f00ff', '#1f9000ff', '#209000ff', '#219100ff', '#229100ff', '#239200ff', '#249200ff', '#259300ff', '#269300ff', '#289400ff', '#299400ff', '#2a9500ff', '#2b9500ff', '#2c9600ff', '#2d9600ff', '#2e9700ff', '#2f9800ff', '#309800ff', '#319900ff', '#329900ff', '#339a00ff', '#349a00ff', '#359b00ff', '#369b00ff', '#379c00ff', '#389c00ff', '#399d00ff', '#3a9d00ff', '#3b9e00ff', '#3c9e00ff', '#3d9f00ff', '#3e9f00ff', '#3fa000ff', '#40a000ff', '#41a100ff', '#42a100ff', '#43a200ff', '#44a200ff', '#45a300ff', '#46a300ff', '#47a400ff', '#48a400ff', '#49a500ff', '#4aa500ff', '#4ba600ff', '#4ca600ff', '#4da700ff', '#4fa700ff', '#50a800ff', '#51a800ff', '#52a900ff', '#53a900ff', '#54aa00ff', '#55aa00ff', '#56ab00ff', '#57ab00ff', '#58ac00ff', '#59ac00ff', '#5aad00ff', '#5bad00ff', '#5cae00ff', '#5daf00ff', '#5eaf00ff', '#5fb000ff', '#60b000ff', '#61b100ff', '#62b100ff', '#63b200ff', '#64b200ff', '#65b300ff', '#66b300ff', '#67b400ff', '#68b400ff', '#69b500ff', '#6ab500ff', '#6bb600ff', '#6cb600ff', '#6db700ff', '#6eb700ff', '#6fb800ff', '#70b800ff', '#71b900ff', '#72b900ff', '#73ba00ff', '#74ba00ff', '#75bb00ff', '#77bb00ff', '#78bc00ff', '#79bc00ff', '#7abd00ff', '#7bbd00ff', '#7cbe00ff', '#7dbe00ff', '#7ebf00ff', '#7fbf00ff', '#80c000ff', '#81c000ff', '#82c100ff', '#83c100ff', '#84c200ff', '#85c200ff', '#86c300ff', '#87c300ff', '#88c400ff', '#89c400ff', '#8ac500ff', '#8bc500ff', '#8cc600ff', '#8dc700ff', '#8ec700ff', '#8fc800ff', '#90c800ff', '#91c900ff', '#92c900ff', '#93ca00ff', '#94ca00ff', '#95cb00ff', '#96cb00ff', '#97cc00ff', '#98cc00ff', '#99cd00ff', '#9acd00ff', '#9bce00ff', '#9cce00ff', '#9ecf00ff', '#9fcf00ff', '#a0d000ff', '#a1d000ff', '#a2d100ff', '#a3d100ff', '#a4d200ff', '#a5d200ff', '#a6d300ff', '#a7d300ff', '#a8d400ff', '#a9d400ff', '#aad500ff', '#abd500ff', '#acd600ff', '#add600ff', '#aed700ff', '#afd700ff', '#b0d800ff', '#b1d800ff', '#b2d900ff', '#b3d900ff', '#b4da00ff', '#b5da00ff', '#b6db00ff', '#b7db00ff', '#b8dc00ff', '#b9dc00ff', '#badd00ff', '#bbde00ff', '#bcde00ff', '#bddf00ff', '#bedf00ff', '#bfe000ff', '#c0e000ff', '#c1e100ff', '#c2e100ff', '#c3e200ff', '#c5e200ff', '#c6e300ff', '#c7e300ff', '#c8e400ff', '#c9e400ff', '#cae500ff', '#cbe500ff', '#cce600ff', '#cde600ff', '#cee700ff', '#cfe700ff', '#d0e800ff', '#d1e800ff', '#d2e900ff', '#d3e900ff', '#d4ea00ff', '#d5ea00ff', '#d6eb00ff', '#d7eb00ff', '#d8ec00ff', '#d9ec00ff', '#daed00ff', '#dbed00ff', '#dcee00ff', '#ddee00ff', '#deef00ff', '#dfef00ff', '#e0f000ff', '#e1f000ff', '#e2f100ff', '#e3f100ff', '#e4f200ff', '#e5f200ff', '#e6f300ff', '#e7f300ff', '#e8f400ff', '#e9f500ff', '#eaf500ff', '#ebf600ff', '#edf600ff', '#eef700ff', '#eff700ff', '#f0f800ff', '#f1f800ff', '#f2f900ff', '#f3f900ff', '#f4fa00ff', '#f5fa00ff', '#f6fb00ff', '#f7fb00ff', '#f8fc00ff', '#f9fc00ff', '#fafd00ff', '#fbfd00ff', '#fcfe00ff', '#fdfe00ff', '#feff00ff', '#ffff00ff', '#ffff00ff', '#fffe00ff', '#fffd00ff', '#fffc00ff', '#fffb00ff', '#fffa00ff', '#fff900ff', '#fff800ff', '#fff700ff', '#fff600ff', '#fff500ff', '#fff400ff', '#fff300ff', '#fff200ff', '#fff100ff', '#fff000ff', '#ffef00ff', '#ffee00ff', '#ffed00ff', '#ffeb00ff', '#ffea00ff', '#ffe900ff', '#ffe800ff', '#ffe700ff', '#ffe600ff', '#ffe500ff', '#ffe400ff', '#ffe300ff', '#ffe200ff', '#ffe100ff', '#ffe000ff', '#ffdf00ff', '#ffde00ff', '#ffdd00ff', '#ffdc00ff', '#ffdb00ff', '#ffda00ff', '#ffd900ff', '#ffd800ff', '#ffd700ff', '#ffd600ff', '#ffd500ff', '#ffd400ff', '#ffd300ff', '#ffd200ff', '#ffd100ff', '#ffd000ff', '#ffcf00ff', '#ffce00ff', '#ffcd00ff', '#ffcc00ff', '#ffcb00ff', '#ffca00ff', '#ffc900ff', '#ffc800ff', '#ffc700ff', '#ffc600ff', '#ffc500ff', '#ffc300ff', '#ffc200ff', '#ffc100ff', '#ffc000ff', '#ffbf00ff', '#ffbe00ff', '#ffbd00ff', '#ffbc00ff', '#ffbb00ff', '#ffba00ff', '#ffb900ff', '#ffb800ff', '#ffb700ff', '#ffb600ff', '#ffb500ff', '#ffb400ff', '#ffb300ff', '#ffb200ff', '#ffb100ff', '#ffb000ff', '#ffaf00ff', '#ffae00ff', '#ffad00ff', '#ffac00ff', '#ffab00ff', '#ffaa00ff', '#ffa900ff', '#ffa800ff', '#ffa700ff', '#ffa600ff', '#ffa500ff', '#ffa400ff', '#ffa300ff', '#ffa200ff', '#ffa100ff', '#ffa000ff', '#ff9f00ff', '#ff9e00ff', '#ff9c00ff', '#ff9b00ff', '#ff9a00ff', '#ff9900ff', '#ff9800ff', '#ff9700ff', '#ff9600ff', '#ff9500ff', '#ff9400ff', '#ff9300ff', '#ff9200ff', '#ff9100ff', '#ff9000ff', '#ff8f00ff', '#ff8e00ff', '#ff8d00ff', '#ff8c00ff', '#ff8b00ff', '#ff8a00ff', '#ff8900ff', '#ff8800ff', '#ff8700ff', '#ff8600ff', '#ff8500ff', '#ff8400ff', '#ff8300ff', '#ff8200ff', '#ff8100ff', '#ff8000ff', '#ff7f00ff', '#ff7e00ff', '#ff7d00ff', '#ff7c00ff', '#ff7b00ff', '#ff7a00ff', '#ff7900ff', '#ff7800ff', '#ff7700ff', '#ff7500ff', '#ff7400ff', '#ff7300ff', '#ff7200ff', '#ff7100ff', '#ff7000ff', '#ff6f00ff', '#ff6e00ff', '#ff6d00ff', '#ff6c00ff', '#ff6b00ff', '#ff6a00ff', '#ff6900ff', '#ff6800ff', '#ff6700ff', '#ff6600ff', '#ff6500ff', '#ff6400ff', '#ff6300ff', '#ff6200ff', '#ff6100ff', '#ff6000ff', '#ff5f00ff', '#ff5e00ff', '#ff5d00ff', '#ff5c00ff', '#ff5b00ff', '#ff5a00ff', '#ff5900ff', '#ff5800ff', '#ff5700ff', '#ff5600ff', '#ff5500ff', '#ff5400ff', '#ff5300ff', '#ff5200ff', '#ff5100ff', '#ff5000ff', '#ff4f00ff', '#ff4d00ff', '#ff4c00ff', '#ff4b00ff', '#ff4a00ff', '#ff4900ff', '#ff4800ff', '#ff4700ff', '#ff4600ff', '#ff4500ff', '#ff4400ff', '#ff4300ff', '#ff4200ff', '#ff4100ff', '#ff4000ff', '#ff3f00ff', '#ff3e00ff', '#ff3d00ff', '#ff3c00ff', '#ff3b00ff', '#ff3a00ff', '#ff3900ff', '#ff3800ff', '#ff3700ff', '#ff3600ff', '#ff3500ff', '#ff3400ff', '#ff3300ff', '#ff3200ff', '#ff3100ff', '#ff3000ff', '#ff2f00ff', '#ff2e00ff', '#ff2d00ff', '#ff2c00ff', '#ff2b00ff', '#ff2a00ff', '#ff2900ff', '#ff2800ff', '#ff2600ff', '#ff2500ff', '#ff2400ff', '#ff2300ff', '#ff2200ff', '#ff2100ff', '#ff2000ff', '#ff1f00ff', '#ff1e00ff', '#ff1d00ff', '#ff1c00ff', '#ff1b00ff', '#ff1a00ff', '#ff1900ff', '#ff1800ff', '#ff1700ff', '#ff1600ff', '#ff1500ff', '#ff1400ff', '#ff1300ff', '#ff1200ff', '#ff1100ff', '#ff1000ff', '#ff0f00ff', '#ff0e00ff', '#ff0d00ff', '#ff0c00ff', '#ff0b00ff', '#ff0a00ff', '#ff0900ff', '#ff0800ff', '#ff0700ff', '#ff0600ff', '#ff0500ff', '#ff0400ff', '#ff0300ff', '#ff0200ff', '#ff0100ff', '#ff0000ff']);
+    
+
+    color_map_e4c82ade3642c7ba9d58160da20fde99.x = d3.scale.linear()
+              .domain([64.5550334920635, 121.17549238095238])
+              .range([0, 450 - 50]);
+
+    color_map_e4c82ade3642c7ba9d58160da20fde99.legend = L.control({position: 'topright'});
+    color_map_e4c82ade3642c7ba9d58160da20fde99.legend.onAdd = function (map) {var div = L.DomUtil.create('div', 'legend'); return div};
+    color_map_e4c82ade3642c7ba9d58160da20fde99.legend.addTo(map_cb46b14ba618f290150a9f22b84a46dc);
+
+    color_map_e4c82ade3642c7ba9d58160da20fde99.xAxis = d3.svg.axis()
+        .scale(color_map_e4c82ade3642c7ba9d58160da20fde99.x)
+        .orient("top")
+        .tickSize(1)
+        .tickValues([64.5550334920635, 92.86526293650795, 121.17549238095238]);
+
+    color_map_e4c82ade3642c7ba9d58160da20fde99.svg = d3.select(".legend.leaflet-control").append("svg")
+        .attr("id", 'legend')
+        .attr("width", 450)
+        .attr("height", 40);
+
+    color_map_e4c82ade3642c7ba9d58160da20fde99.g = color_map_e4c82ade3642c7ba9d58160da20fde99.svg.append("g")
+        .attr("class", "key")
+        .attr("fill", "black")
+        .attr("transform", "translate(25,16)");
+
+    color_map_e4c82ade3642c7ba9d58160da20fde99.g.selectAll("rect")
+        .data(color_map_e4c82ade3642c7ba9d58160da20fde99.color.range().map(function(d, i) {
+          return {
+            x0: i ? color_map_e4c82ade3642c7ba9d58160da20fde99.x(color_map_e4c82ade3642c7ba9d58160da20fde99.color.domain()[i - 1]) : color_map_e4c82ade3642c7ba9d58160da20fde99.x.range()[0],
+            x1: i < color_map_e4c82ade3642c7ba9d58160da20fde99.color.domain().length ? color_map_e4c82ade3642c7ba9d58160da20fde99.x(color_map_e4c82ade3642c7ba9d58160da20fde99.color.domain()[i]) : color_map_e4c82ade3642c7ba9d58160da20fde99.x.range()[1],
+            z: d
+          };
+        }))
+      .enter().append("rect")
+        .attr("height", 40 - 30)
+        .attr("x", function(d) { return d.x0; })
+        .attr("width", function(d) { return d.x1 - d.x0; })
+        .style("fill", function(d) { return d.z; });
+
+    color_map_e4c82ade3642c7ba9d58160da20fde99.g.call(color_map_e4c82ade3642c7ba9d58160da20fde99.xAxis).append("text")
+        .attr("class", "caption")
+        .attr("y", 21)
+        .attr("fill", "black")
+        .text("Litros estimados por Ha (menor = m\u00e1s eficiente)");
+</script>
+</html>
