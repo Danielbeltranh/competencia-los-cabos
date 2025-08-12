@@ -158,9 +158,9 @@ with right:
     tile_url = tile_options[tile_choice]
 
     if tile_url.startswith("http"):
-        m = folium.Map(location=center, zoom_start=15, tiles=tile_url, attr=tile_choice)
+        m = folium.Map(location=center, zoom_start=15, tiles=tile_url, attr=tile_choice, scrollWheelZoom=False)
     else:
-        m = folium.Map(location=center, zoom_start=15, tiles=tile_url)
+        m = folium.Map(location=center, zoom_start=15, tiles=tile_url, scrollWheelZoom=False)
 
     Fullscreen(position="topleft", title="Pantalla completa", title_cancel="Salir").add_to(m)
 
