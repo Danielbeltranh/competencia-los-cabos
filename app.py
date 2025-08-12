@@ -22,13 +22,13 @@ def split_tags(x):
 def safe(x):  # str safe
     return "" if pd.isna(x) else str(x)
 
-def chip_list(items):
+def bullet_list(items):
     if not items:
         return ""
-    html = '<div style="display:flex;flex-wrap:wrap;gap:8px;">'
+    html = '<ul style="padding-left:20px;margin:0;">'
     for it in items:
-        html += f'<span style="background:{BG_SOFT};border:1px solid {ACCENT};color:{TEXT};padding:4px 10px;border-radius:999px;font-size:12px;">{it}</span>'
-    html += '</div>'
+        html += f'<li>{it}</li>'
+    html += '</ul>'
     return html
 
 def info_row(label, value):
@@ -68,11 +68,11 @@ def details_card(row):
         {info_row("Unidades (aprox.)", num_u)}
         <div style="margin-top:10px;">
           <div style="color:#64748B;font-size:12px;margin-bottom:4px;">Amenidades</div>
-          {chip_list(amen)}
+          {bullet_list(amen)}
         </div>
         <div style="margin-top:10px;">
           <div style="color:#64748B;font-size:12px;margin-bottom:4px;">Servicios</div>
-          {chip_list(servicios)}
+          {bullet_list(servicios)}
         </div>
       </div>
     </div>
@@ -108,6 +108,7 @@ left, right = st.columns([1, 2.2], gap="large")
 # ----------------- LEFT PANEL (DETALLES) -----------------
 with left:
     st.markdown("###### Selección actual")
+    details_placeholder = st.empty()
     # estado de selección (por nombre)
     if "selected_name" not in st.session_state:
         st.session_state.selected_name = "Santarena" if (df["nombre"].str.lower()=="santarena").any() else safe(df.iloc[0]["nombre"])
@@ -115,9 +116,9 @@ with left:
     sel_name = st.session_state.selected_name
     row_sel = df.loc[df["nombre"]==sel_name].head(1)
     if not row_sel.empty:
-        st.markdown(details_card(row_sel.iloc[0]), unsafe_allow_html=True)
+        details_placeholder.markdown(details_card(row_sel.iloc[0]), unsafe_allow_html=True)
     else:
-        st.info("Haz clic en un desarrollo en el mapa para ver detalles.")
+        details_placeholder.info("Haz clic en un desarrollo en el mapa para ver detalles.")
 
     st.markdown("###### Filtros (rápidos)")
     # filtros visuales (opcionales, no afectan selección)
@@ -128,7 +129,6 @@ with left:
     ft_tipo   = st.multiselect("Tipo", tipos_all)
     ft_estilo = st.multiselect("Estilo / diseño", estilos_all)
     ft_estado = st.multiselect("Estado", estados_all)
-    show_buffers = st.checkbox("Mostrar buffers de Santarena (1 km y 3 km)", value=True)
 
 # aplicar filtros a la capa (visuales)
 mask = pd.Series(True, index=df.index)
@@ -149,13 +149,20 @@ with right:
     else:
         center = [df["lat"].mean(), df["lon"].mean()]
 
-    m = folium.Map(location=center, zoom_start=15, tiles="OpenStreetMap")
-    Fullscreen(position="topleft", title="Pantalla completa", title_cancel="Salir").add_to(m)
+    tile_options = {
+        "OpenStreetMap": "OpenStreetMap",
+        "CartoDB Positron": "CartoDB Positron",
+        "Esri World Imagery": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+    }
+    tile_choice = st.selectbox("Mapa base", list(tile_options.keys()))
+    tile_url = tile_options[tile_choice]
 
-    if show_buffers and (df["nombre"].str.lower()=="santarena").any():
-        c = [float(c_row["lat"]), float(c_row["lon"])]
-        folium.Circle(location=c, radius=1000, color="#2563EB", fill=False, weight=2, opacity=0.6).add_to(m)
-        folium.Circle(location=c, radius=3000, color="#2563EB", fill=False, weight=2, opacity=0.35).add_to(m)
+    if tile_url.startswith("http"):
+        m = folium.Map(location=center, zoom_start=15, tiles=tile_url, attr=tile_choice)
+    else:
+        m = folium.Map(location=center, zoom_start=15, tiles=tile_url)
+
+    Fullscreen(position="topleft", title="Pantalla completa", title_cancel="Salir").add_to(m)
 
     cluster = MarkerCluster(name="Desarrollos", disableClusteringAtZoom=16).add_to(m)
 
@@ -200,6 +207,10 @@ with right:
             )
         ).add_to(m)
 
+    coords = df_map[["lat","lon"]].dropna().values
+    if len(coords):
+        m.fit_bounds(coords)
+
     # render y captura de clics
     st.markdown("### Mapa de competencia — Los Cabos")
     st.caption(f"Proyectos visibles: {len(df_map)} / {len(df)}")
@@ -212,5 +223,7 @@ with right:
 
     if clicked_name:
         st.session_state.selected_name = clicked_name
-        # Forzar refresh suave del panel izquierdo en el próximo re-render
-        st.experimental_rerun()
+        row_sel = df.loc[df["nombre"]==clicked_name].head(1)
+        if not row_sel.empty:
+            details_placeholder.markdown(details_card(row_sel.iloc[0]), unsafe_allow_html=True)
+
