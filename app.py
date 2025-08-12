@@ -49,7 +49,6 @@ def details_card(row):
     estado = safe(row.get("estado_desarrollo"))
     tipologias = safe(row.get("tipologias_superficie_m2"))
     num_u = safe(row.get("num_unidades"))
-    amen = split_tags(safe(row.get("amenidades")))
     servicios = split_tags(safe(row.get("servicios_adicionales")))
 
     link_html = f'<a href="{website}" target="_blank" style="color:{ACCENT};text-decoration:none;">Ir al sitio ↗</a>' if website else ""
@@ -66,10 +65,6 @@ def details_card(row):
         {info_row("Estado", estado)}
         {info_row("Tipologías / m²", tipologias)}
         {info_row("Unidades (aprox.)", num_u)}
-        <div style="margin-top:10px;">
-          <div style="color:#64748B;font-size:12px;margin-bottom:4px;">Amenidades</div>
-          {bullet_list(amen)}
-        </div>
         <div style="margin-top:10px;">
           <div style="color:#64748B;font-size:12px;margin-bottom:4px;">Servicios</div>
           {bullet_list(servicios)}
@@ -103,25 +98,31 @@ st.markdown(f"""
 </style>
 """, unsafe_allow_html=True)
 
-left, right = st.columns([1, 2.2], gap="large")
+left, right = st.columns([2.2, 1], gap="large")
 
-# ----------------- LEFT PANEL (DETALLES) -----------------
-with left:
+# ----------------- PANEL DERECHO (DETALLES Y FILTROS) -----------------
+with right:
     st.markdown("###### Selección actual")
     details_placeholder = st.empty()
-    # estado de selección (por nombre)
+    amenities_placeholder = st.empty()
+
     if "selected_name" not in st.session_state:
-        st.session_state.selected_name = "Santarena" if (df["nombre"].str.lower()=="santarena").any() else safe(df.iloc[0]["nombre"])
+        st.session_state.selected_name = ""
 
     sel_name = st.session_state.selected_name
     row_sel = df.loc[df["nombre"]==sel_name].head(1)
     if not row_sel.empty:
         details_placeholder.markdown(details_card(row_sel.iloc[0]), unsafe_allow_html=True)
+        amens = split_tags(row_sel.iloc[0]["amenidades"])
+        if amens:
+            amenities_placeholder.selectbox("Amenidades", amens, key="amenidades_dropdown")
+        else:
+            amenities_placeholder.write("Sin amenidades registradas.")
     else:
         details_placeholder.info("Haz clic en un desarrollo en el mapa para ver detalles.")
+        amenities_placeholder.empty()
 
     st.markdown("###### Filtros (rápidos)")
-    # filtros visuales (opcionales, no afectan selección)
     tipos_all   = sorted([safe(x) for x in df["tipo_desarrollo"].dropna().unique() if safe(x)])
     estilos_all = sorted([safe(x) for x in df["diseno_estilo"].dropna().unique() if safe(x)])
     estados_all = sorted([safe(x) for x in df["estado_desarrollo"].dropna().unique() if safe(x)])
@@ -140,9 +141,8 @@ if ft_estado:
     mask &= df["estado_desarrollo"].isin(ft_estado)
 df_map = df[mask].copy()
 
-# ----------------- MAP -----------------
-with right:
-    # centro: Santarena si existe, si no promedio
+# ----------------- MAPA -----------------
+with left:
     if (df["nombre"].str.lower()=="santarena").any():
         c_row = df.loc[df["nombre"].str.lower()=="santarena"].iloc[0]
         center = [float(c_row["lat"]), float(c_row["lon"])]
@@ -166,7 +166,6 @@ with right:
 
     cluster = MarkerCluster(name="Desarrollos", disableClusteringAtZoom=16).add_to(m)
 
-    # pins + labels
     for _, r in df_map.iterrows():
         try:
             lat, lon = float(r["lat"]), float(r["lon"])
@@ -176,14 +175,12 @@ with right:
         name = safe(r["nombre"])
         color = "red" if name.strip().lower()=="santarena" else "blue"
 
-        # marker clickable con tooltip (clave para detectar selección)
         folium.Marker(
             [lat, lon],
-            tooltip=name,  # lo usamos para identificar el click
+            tooltip=name,
             icon=folium.Icon(color=color, icon="info-sign")
         ).add_to(cluster)
 
-        # label bonito permanente junto al pin
         folium.map.Marker(
             [lat, lon],
             icon=DivIcon(
@@ -211,12 +208,10 @@ with right:
     if len(coords):
         m.fit_bounds(coords)
 
-    # render y captura de clics
     st.markdown("### Mapa de competencia — Los Cabos")
     st.caption(f"Proyectos visibles: {len(df_map)} / {len(df)}")
     ret = st_folium(m, height=760, use_container_width=True)
 
-    # si el usuario clickeó un Marker, llega el tooltip del último objeto clickeado
     clicked_name = None
     if ret and "last_object_clicked_tooltip" in ret and ret["last_object_clicked_tooltip"]:
         clicked_name = ret["last_object_clicked_tooltip"]
@@ -226,4 +221,9 @@ with right:
         row_sel = df.loc[df["nombre"]==clicked_name].head(1)
         if not row_sel.empty:
             details_placeholder.markdown(details_card(row_sel.iloc[0]), unsafe_allow_html=True)
+            amens = split_tags(row_sel.iloc[0]["amenidades"])
+            if amens:
+                amenities_placeholder.selectbox("Amenidades", amens, key="amenidades_dropdown")
+            else:
+                amenities_placeholder.write("Sin amenidades registradas.")
 
