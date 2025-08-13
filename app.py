@@ -1,43 +1,58 @@
+import os
 import pandas as pd
 import streamlit as st
 import folium
 from folium.plugins import MarkerCluster, Fullscreen
-from folium.features import DivIcon
+# from folium.features import DivIcon   # desactivado para evitar problemas en cloud
 from streamlit_folium import st_folium
 
-# ----------------- CONFIG -----------------
-st.set_page_config(page_title="Mapa Competencia — Los Cabos", layout="wide")
+st.set_page_config(page_title="Mapa competencia — Los Cabos", layout="wide")
 
-PRIMARY = "#0F766E"   # teal
+PRIMARY = "#0F766E"
 ACCENT  = "#0EA5A4"
-BG_SOFT = "#F6FAF9"
 TEXT    = "#0B132B"
 
-# ----------------- HELPERS -----------------
-def split_tags(x):
-    if not isinstance(x, str) or not x.strip():
+SHOW_LABELS = False  # pon True si quieres probar las etiquetas flotantes (DivIcon)
+
+st.markdown(f"""
+<style>
+.block-container {{ padding-top: 0.8rem; }}
+.card {{
+  background:#FFFFFF;border:1px solid #E2E8F0;border-radius:16px;
+  padding:18px;box-shadow:0 1px 6px rgba(0,0,0,0.05);
+}}
+.card h3 {{ margin:0;color:{TEXT}; }}
+.smalllabel {{ color:#334155;font-size:12px;margin-bottom:4px; }}
+.info-row {{ margin:8px 0; }}
+.info-row .v {{ font-weight:600;font-size:14px;color:{TEXT}; }}
+ul.bul {{ margin:6px 0 0 18px; color:{TEXT}; font-size:14px; line-height:1.4; }}
+iframe[title^="folium"] {{ scroll-margin-top: 140px; }}
+</style>
+""", unsafe_allow_html=True)
+
+def split_csv(s: str):
+    if not isinstance(s, str) or not s.strip():
         return []
-    return [t.strip() for t in x.replace("|", ",").replace(";", ",").split(",") if t.strip()]
+    return [t.strip() for t in s.split(",") if t.strip()]
 
-def safe(x):  # str safe
-    return "" if pd.isna(x) else str(x)
-
-def bullet_list(items):
-    if not items:
+def safe(x):
+    # Fuerza str nativo, evitando numpy.str_, Timestamp, etc.
+    if x is None:
         return ""
-    html = '<ul style="padding-left:20px;margin:0;">'
-    for it in items:
-        html += f'<li>{it}</li>'
-    html += '</ul>'
-    return html
+    try:
+        # pandas NA -> ""
+        if pd.isna(x): 
+            return ""
+    except Exception:
+        pass
+    return str(x)
 
 def info_row(label, value):
-    if not value:
-        return ""
+    if not value: return ""
     return f"""
-    <div style="margin:4px 0;">
-      <span style="color:#64748B;font-size:12px;">{label}</span><br/>
-      <span style="font-weight:600;font-size:14px;color:{TEXT};">{value}</span>
+    <div class="info-row">
+      <div class="smalllabel">{label}</div>
+      <div class="v">{value}</div>
     </div>
     """
 
@@ -48,182 +63,171 @@ def details_card(row):
     estilo = safe(row.get("diseno_estilo"))
     estado = safe(row.get("estado_desarrollo"))
     tipologias = safe(row.get("tipologias_superficie_m2"))
-    num_u = safe(row.get("num_unidades"))
-    servicios = split_tags(safe(row.get("servicios_adicionales")))
-
+    unidades = safe(row.get("num_unidades"))
+    amen_list = split_csv(safe(row.get("amenidades")))
+    serv_list = split_csv(safe(row.get("servicios_adicionales")))
     link_html = f'<a href="{website}" target="_blank" style="color:{ACCENT};text-decoration:none;">Ir al sitio ↗</a>' if website else ""
+    am_ul = "<ul class='bul'>" + "".join([f"<li>{safe(a)}</li>" for a in amen_list]) + "</ul>" if amen_list else "<div class='smalllabel'>—</div>"
+    sv_ul = "<ul class='bul'>" + "".join([f"<li>{safe(a)}</li>" for a in serv_list]) + "</ul>" if serv_list else "<div class='smalllabel'>—</div>"
 
     return f"""
-    <div style="background:white;border:1px solid #E2E8F0;border-radius:16px;padding:18px;box-shadow:0 1px 6px rgba(0,0,0,0.05);">
-      <div style="display:flex;justify-content:space-between;align-items:center;">
-        <h3 style="margin:0;color:{TEXT};">{nombre}</h3>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
+        <h3>{nombre}</h3>
         <div>{link_html}</div>
       </div>
-      <div style="margin-top:12px;">
-        {info_row("Tipo de desarrollo", tipo)}
-        {info_row("Estilo / diseño", estilo)}
-        {info_row("Estado", estado)}
-        {info_row("Tipologías / m²", tipologias)}
-        {info_row("Unidades (aprox.)", num_u)}
-        <div style="margin-top:10px;">
-          <div style="color:#64748B;font-size:12px;margin-bottom:4px;">Servicios</div>
-          {bullet_list(servicios)}
-        </div>
+      {info_row("Tipo de desarrollo", tipo)}
+      {info_row("Estilo / diseño", estilo)}
+      {info_row("Estado", estado)}
+      {info_row("Tipologías / m²", tipologias)}
+      {info_row("Unidades", unidades)}
+      <div style="margin-top:8px;">
+        <div class="smalllabel">Amenidades</div>
+        {am_ul}
+      </div>
+      <div style="margin-top:8px;">
+        <div class="smalllabel">Servicios</div>
+        {sv_ul}
       </div>
     </div>
     """
 
-# ----------------- DATA -----------------
-df = pd.read_csv("competencia_los_cabos.csv", dtype=str)
+# --------- DATA ----------
+fname_candidates = ["competencia_los_cabos_completa.csv", "competencia_los_cabos.csv"]
+csv_file = next((f for f in fname_candidates if os.path.exists(f)), None)
+if not csv_file:
+    st.error("No encontré el CSV de competencia en la carpeta del proyecto.")
+    st.stop()
+
+df = pd.read_csv(csv_file, dtype=str)
+
+# forzar tipos nativos en lat/lon
 for c in ["lat","lon"]:
     if c in df.columns:
-        df[c] = pd.to_numeric(df[c], errors="coerce")
+        df[c] = pd.to_numeric(df[c], errors="coerce").astype(float)
 
-# columnas mínimas
-cols_min = ["nombre","lat","lon","website","tipo_desarrollo","diseno_estilo",
-            "estado_desarrollo","tipologias_superficie_m2","num_unidades",
-            "amenidades","servicios_adicionales"]
-for c in cols_min:
-    if c not in df.columns:
-        df[c] = ""
+need_cols = ["nombre","website","tipo_desarrollo","diseno_estilo","estado_desarrollo",
+             "tipologias_superficie_m2","num_unidades","amenidades","servicios_adicionales"]
+for c in need_cols:
+    if c not in df.columns: df[c] = ""
+df[need_cols] = df[need_cols].fillna("").astype(str)
 
-df["amenidades"] = df["amenidades"].fillna("")
-df["servicios_adicionales"] = df["servicios_adicionales"].fillna("")
+names = df["nombre"].fillna("").astype(str).tolist()
 
-# ----------------- UI GLOBAL -----------------
-st.markdown(f"""
-<style>
-  .block-container {{ padding-top: 1.2rem; }}
-  h3 {{ font-family: ui-sans-serif, -apple-system, Segoe UI, Roboto; }}
-</style>
-""", unsafe_allow_html=True)
+# --------- HEADER / SELECTOR ----------
+if "selected_name" not in st.session_state:
+    st.session_state.selected_name = names[0] if names else ""
 
-left, right = st.columns([2.2, 1], gap="large")
+tcol1, tcol2 = st.columns([2, 3], vertical_alignment="center")
+with tcol1:
+    st.markdown("## Mapa de competencia — Los Cabos")
+    st.caption(f"Proyectos: {len(df)}")
+with tcol2:
+    selected = st.selectbox("Selecciona desarrollo", names,
+                            index=names.index(st.session_state.selected_name) if st.session_state.selected_name in names else 0)
+    c1, c2, _ = st.columns([1,1,6])
+    if c1.button("⟵ Anterior", use_container_width=True):
+        i = names.index(selected); selected = names[(i-1) % len(names)]
+    if c2.button("Siguiente ⟶", use_container_width=True):
+        i = names.index(selected); selected = names[(i+1) % len(names)]
+    st.session_state.selected_name = selected
 
-# ----------------- PANEL DERECHO (DETALLES Y FILTROS) -----------------
-with right:
-    st.markdown("###### Selección actual")
-    details_placeholder = st.empty()
-    amenities_placeholder = st.empty()
+# --------- LAYOUT ----------
+left, right = st.columns([1.05, 2.35], gap="large")
 
-    if "selected_name" not in st.session_state:
-        st.session_state.selected_name = ""
-
-    sel_name = st.session_state.selected_name
-    row_sel = df.loc[df["nombre"]==sel_name].head(1)
-    if not row_sel.empty:
-        details_placeholder.markdown(details_card(row_sel.iloc[0]), unsafe_allow_html=True)
-        amens = split_tags(row_sel.iloc[0]["amenidades"])
-        if amens:
-            amenities_placeholder.selectbox("Amenidades", amens, key="amenidades_dropdown")
-        else:
-            amenities_placeholder.write("Sin amenidades registradas.")
-    else:
-        details_placeholder.info("Haz clic en un desarrollo en el mapa para ver detalles.")
-        amenities_placeholder.empty()
-
-    st.markdown("###### Filtros (rápidos)")
-    tipos_all   = sorted([safe(x) for x in df["tipo_desarrollo"].dropna().unique() if safe(x)])
-    estilos_all = sorted([safe(x) for x in df["diseno_estilo"].dropna().unique() if safe(x)])
-    estados_all = sorted([safe(x) for x in df["estado_desarrollo"].dropna().unique() if safe(x)])
-
-    ft_tipo   = st.multiselect("Tipo", tipos_all)
-    ft_estilo = st.multiselect("Estilo / diseño", estilos_all)
-    ft_estado = st.multiselect("Estado", estados_all)
-
-# aplicar filtros a la capa (visuales)
-mask = pd.Series(True, index=df.index)
-if ft_tipo:
-    mask &= df["tipo_desarrollo"].isin(ft_tipo)
-if ft_estilo:
-    mask &= df["diseno_estilo"].isin(ft_estilo)
-if ft_estado:
-    mask &= df["estado_desarrollo"].isin(ft_estado)
-df_map = df[mask].copy()
-
-# ----------------- MAPA -----------------
 with left:
-    if (df["nombre"].str.lower()=="santarena").any():
-        c_row = df.loc[df["nombre"].str.lower()=="santarena"].iloc[0]
-        center = [float(c_row["lat"]), float(c_row["lon"])]
+    sel = df.loc[df["nombre"] == st.session_state.selected_name].head(1)
+    if sel.empty:
+        st.info("Selecciona un desarrollo o haz clic en el mapa.")
     else:
-        center = [df["lat"].mean(), df["lon"].mean()]
+        st.markdown(details_card(sel.iloc[0]), unsafe_allow_html=True)
 
-    tile_options = {
-        "OpenStreetMap": "OpenStreetMap",
-        "CartoDB Positron": "CartoDB Positron",
-        "Esri World Imagery": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
-    }
-    tile_choice = st.selectbox("Mapa base", list(tile_options.keys()))
-    tile_url = tile_options[tile_choice]
+with right:
+    # centro por seleccionado (si existe)
+    center = [23.0, -109.73]; zoom = 11
+    if not sel.empty:
+        try:
+            lat = float(sel.iloc[0]["lat"]); lon = float(sel.iloc[0]["lon"])
+            if not pd.isna(lat) and not pd.isna(lon):
+                center = [float(lat), float(lon)]
+                zoom = 14
+        except Exception:
+            pass
 
-    if tile_url.startswith("http"):
-        m = folium.Map(location=center, zoom_start=15, tiles=tile_url, attr=tile_choice, scrollWheelZoom=False)
-    else:
-        m = folium.Map(location=center, zoom_start=15, tiles=tile_url, scrollWheelZoom=False)
+    m = folium.Map(location=[float(center[0]), float(center[1])], zoom_start=int(zoom), control_scale=True)
+
+    folium.TileLayer("CartoDB positron", name="CartoDB Positron", control=True).add_to(m)
+    folium.TileLayer("OpenStreetMap", name="OpenStreetMap").add_to(m)
+    folium.TileLayer(
+        tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+        attr="Esri World Imagery", name="Esri World Imagery"
+    ).add_to(m)
+    folium.TileLayer("Stamen Terrain", name="Stamen Terrain").add_to(m)
+    folium.TileLayer(
+        tiles="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
+        attr="OSM HOT", name="OSM HOT"
+    ).add_to(m)
 
     Fullscreen(position="topleft", title="Pantalla completa", title_cancel="Salir").add_to(m)
+    cluster = MarkerCluster(name="Desarrollos", disableClusteringAtZoom=int(16)).add_to(m)
 
-    cluster = MarkerCluster(name="Desarrollos", disableClusteringAtZoom=16).add_to(m)
-
-    for _, r in df_map.iterrows():
+    # marcadores “seguros”: tipos nativos solamente
+    for _, r in df.iterrows():
         try:
-            lat, lon = float(r["lat"]), float(r["lon"])
-        except:
+            lat = float(r["lat"]); lon = float(r["lon"])
+        except Exception:
             continue
-
-        name = safe(r["nombre"])
-        color = "red" if name.strip().lower()=="santarena" else "blue"
-
+        name = safe(r.get("nombre"))
+        is_sel = (name == st.session_state.selected_name)
+        color = "red" if is_sel else "blue"
         folium.Marker(
-            [lat, lon],
-            tooltip=name,
-            icon=folium.Icon(color=color, icon="info-sign")
+            [float(lat), float(lon)],
+            tooltip=str(name),
+            icon=folium.Icon(color=str(color), icon="info-sign")
         ).add_to(cluster)
 
-        folium.map.Marker(
-            [lat, lon],
-            icon=DivIcon(
-                icon_size=(150,36),
-                icon_anchor=(0,0),
-                html=f"""
-                <div style="
-                    background: rgba(255,255,255,0.9);
-                    padding: 2px 8px;
-                    border-radius: 8px;
-                    border: 1px solid #CBD5E1;
-                    color: {TEXT};
-                    font-weight: 600;
-                    font-size: 12px;
-                    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-                    transform: translate(10px, -28px);
-                    ">
-                    {name}
-                </div>
-                """
-            )
-        ).add_to(m)
+        # DivIcon opcional (desactivado por defecto por compatibilidad en Cloud)
+        if SHOW_LABELS:
+            from folium.features import DivIcon
+            html = f"""
+            <div style="
+                background:#FFFFFF;
+                padding:2px 8px;
+                border-radius:8px;
+                border:1px solid #CBD5E1;
+                color:{TEXT};
+                font-weight:600;
+                font-size:12px;
+                transform: translate(10px, -28px);
+            ">{name}</div>
+            """
+            folium.map.Marker(
+                [float(lat), float(lon)],
+                icon=DivIcon(icon_size=(200, 36), icon_anchor=(0, 0), html=str(html))
+            ).add_to(m)
 
-    coords = df_map[["lat","lon"]].dropna().values
-    if len(coords):
-        m.fit_bounds(coords)
+    # si no hay seleccionado, ajustamos a todos (lista de listas nativas)
+    pts = df[["lat","lon"]].dropna()
+    try:
+        pts_list = [[float(a), float(b)] for a, b in pts.values.tolist()]
+    except Exception:
+        pts_list = []
+    if pts_list and sel.empty:
+        m.fit_bounds(pts_list)
 
-    st.markdown("### Mapa de competencia — Los Cabos")
-    st.caption(f"Proyectos visibles: {len(df_map)} / {len(df)}")
-    ret = st_folium(m, height=760, use_container_width=True)
+    # Render seguro
+    ret = st_folium(m, height=780, use_container_width=True, key="map")
 
-    clicked_name = None
-    if ret and "last_object_clicked_tooltip" in ret and ret["last_object_clicked_tooltip"]:
-        clicked_name = ret["last_object_clicked_tooltip"]
+    # click opcional desde mapa
+    if ret and isinstance(ret.get("last_object_clicked_tooltip"), str):
+        clicked = ret["last_object_clicked_tooltip"]
+        if clicked in names:
+            st.session_state.selected_name = clicked
 
-    if clicked_name:
-        st.session_state.selected_name = clicked_name
-        row_sel = df.loc[df["nombre"]==clicked_name].head(1)
-        if not row_sel.empty:
-            details_placeholder.markdown(details_card(row_sel.iloc[0]), unsafe_allow_html=True)
-            amens = split_tags(row_sel.iloc[0]["amenidades"])
-            if amens:
-                amenities_placeholder.selectbox("Amenidades", amens, key="amenidades_dropdown")
-            else:
-                amenities_placeholder.write("Sin amenidades registradas.")
-
+# tabla
+st.markdown("---")
+st.markdown("#### Vista ejecutiva")
+cols_show = ["nombre","tipo_desarrollo","diseno_estilo","estado_desarrollo",
+             "num_unidades","tipologias_superficie_m2","amenidades","website"]
+present_cols = [c for c in cols_show if c in df.columns]
+st.dataframe(df[present_cols], use_container_width=True)
