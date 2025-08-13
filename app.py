@@ -28,6 +28,7 @@ LOGO_FILES = {
     "Vista Vela": "vistavela.png",
     "Tramonti": "tramonti.png",
     "Punta Mirante": "puntamirante.png",
+    "ALANA cerro colorado": "alanacerrocolorado.png",
 }
 
 # Correcciones de websites (nombre -> url correcta)
@@ -191,6 +192,14 @@ df["logo_path"] = df.apply(_compute_logo_path, axis=1)
 
 names = df["nombre"].astype(str).tolist()
 
+# ================== Persistent map state ==================
+if "map_center" not in st.session_state:
+    st.session_state["map_center"] = {"lat": 23.0, "lon": -109.73, "zoom": 11}
+if "center_locked" not in st.session_state:
+    st.session_state["center_locked"] = False
+if "last_selected_name" not in st.session_state:
+    st.session_state["last_selected_name"] = ""
+
 # ================== HEADER + SELECTOR ==================
 if "selected_name" not in st.session_state:
     st.session_state.selected_name = names[0] if names else ""
@@ -208,18 +217,24 @@ with tcol2:
     if c2.button("Siguiente ⟶", use_container_width=True):
         selected = names[(names.index(selected)+1) % len(names)]
     st.session_state.selected_name = selected
-    if c3.button("📍 Zoom a Loma escondida", use_container_width=True):
-        st.session_state["zoom_to_our"] = True
-    else:
-        st.session_state["zoom_to_our"] = st.session_state.get("zoom_to_our", False)
+    if c3.button("↩ Regresar a Loma escondida", use_container_width=True):
+        st.session_state["map_center"] = {"lat": OUR_DEV["lat"], "lon": OUR_DEV["lon"], "zoom": 15}
+        st.session_state["center_locked"] = True
 
     # Selector de tipo de mapa (capas base)
     base_maps = [
+        "Esri World Imagery",
         "CartoDB Positron",
-        "OpenStreetMap",
-        "Esri World Imagery"
+        "OpenStreetMap"
     ]
-    base_choice = st.selectbox("Tipo de mapa", base_maps, index=0)
+    if "base_choice" not in st.session_state:
+        st.session_state["base_choice"] = "Esri World Imagery"
+    base_choice = st.selectbox(
+        "Tipo de mapa",
+        base_maps,
+        index=base_maps.index(st.session_state["base_choice"]),
+        key="base_choice"
+    )
 
 # ================== LAYOUT ==================
 left, right = st.columns([1.05, 2.35], gap="large")
@@ -261,21 +276,21 @@ with left:
             pass
 
 with right:
-    # Centro y zoom
-    center, zoom = [23.0, -109.73], 11
-    if st.session_state.get("zoom_to_our"):
-        center, zoom = [OUR_DEV["lat"], OUR_DEV["lon"]], 15
-        st.session_state["zoom_to_our"] = False
-    elif not sel.empty:
-        try:
-            center, zoom = [float(sel.iloc[0]["lat"]), float(sel.iloc[0]["lon"])], 14
-        except Exception:
-            pass
+    # Centro y zoom persistentes
+    mc = st.session_state.get("map_center", {"lat": 23.0, "lon": -109.73, "zoom": 11})
+    center, zoom = [mc["lat"], mc["lon"]], mc["zoom"]
 
     # === Mapa con selección de base ===
     m = folium.Map(location=center, zoom_start=zoom, control_scale=True)
 
     # Capas base (solo una visible a la vez)
+    folium.TileLayer(
+        tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+        attr="Tiles © Esri — Source: Esri, Maxar, Earthstar Geographics, and the GIS User Community",
+        name="Esri World Imagery",
+        overlay=False, control=True, show=(base_choice == "Esri World Imagery")
+    ).add_to(m)
+
     folium.TileLayer(
         "CartoDB positron",
         name="CartoDB Positron",
@@ -286,13 +301,6 @@ with right:
         "OpenStreetMap",
         name="OpenStreetMap",
         overlay=False, control=True, show=(base_choice == "OpenStreetMap")
-    ).add_to(m)
-
-    folium.TileLayer(
-        tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-        attr="Tiles © Esri — Source: Esri, Maxar, Earthstar Geographics, and the GIS User Community",
-        name="Esri World Imagery",
-        overlay=False, control=True, show=(base_choice == "Esri World Imagery")
     ).add_to(m)
 
     folium.LayerControl(position="topleft", collapsed=False).add_to(m)
@@ -348,7 +356,48 @@ with right:
             pass
 
     # Render del mapa
-    st_folium(m, height=780, use_container_width=True, key="map")
+    ret = st_folium(m, height=780, use_container_width=True, key="map")
+
+    # Mantener selección de marcador si se hizo click
+    if ret and ret.get("last_object_clicked_tooltip"):
+        st.session_state.selected_name = ret["last_object_clicked_tooltip"]
+
+    try:
+        if ret and isinstance(ret.get("last_object_clicked"), dict):
+            lat = ret["last_object_clicked"].get("lat", None)
+            lng = ret["last_object_clicked"].get("lng", None)
+            if lat is not None and lng is not None:
+                best_name, best_d = None, 1e9
+                for _, r in df.iterrows():
+                    try:
+                        rlat, rlon = float(r["lat"]), float(r["lon"])
+                    except Exception:
+                        continue
+                    d = haversine_km(lat, lng, rlat, rlon)
+                    if d < best_d:
+                        best_d, best_name = d, str(r.get("nombre") or "")
+                if best_name and best_d <= 0.08 and best_name in names:
+                    st.session_state.selected_name = best_name
+    except Exception:
+        pass
+
+    # Si cambió el desarrollo seleccionado, recentrar (y desbloquear)
+    try:
+        cur = st.session_state.get("selected_name", "")
+        prev = st.session_state.get("last_selected_name", "")
+        if cur and cur != prev:
+            row = df.loc[df["nombre"] == cur].head(1)
+            if not row.empty:
+                try:
+                    lat_c = float(row.iloc[0]["lat"])
+                    lon_c = float(row.iloc[0]["lon"])
+                    st.session_state["map_center"] = {"lat": lat_c, "lon": lon_c, "zoom": 14}
+                    st.session_state["center_locked"] = False
+                except Exception:
+                    pass
+            st.session_state["last_selected_name"] = cur
+    except Exception:
+        pass
 
 # ================== TABLA ==================
 st.markdown("---")
