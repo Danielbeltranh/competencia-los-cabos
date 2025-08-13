@@ -3,6 +3,7 @@ import math
 import pandas as pd
 import streamlit as st
 import folium
+import base64
 from streamlit_folium import st_folium
 
 # ================== CONFIG ==================
@@ -12,6 +13,41 @@ ACCENT  = "#0EA5A4"
 TEXT    = "#0B132B"
 
 SHOW_LABELS = True  # mostrar etiquetas flotantes sobre cada desarrollo
+
+LOGO_DIR = "static/logos"
+
+# Mapeo de archivos de logo (por nombre de desarrollo -> archivo)
+LOGO_FILES = {
+    "Santarena": "santarena.png",
+    "Dunna": "dunna.png",
+    "Ladera San José": "ladera.png",
+    "Casa NIMA": "casanima.png",
+    "CORA": "cora.png",
+    "MARE": "mare.png",
+    "Solara del Mar": "solaradelmar.png",
+    "Vista Vela": "vistavela.png",
+    "Tramonti": "tramonti.png",
+    "Punta Mirante": "puntamirante.png",
+}
+
+# Correcciones de websites (nombre -> url correcta)
+WEBSITE_FIXES = {
+    "Solara del Mar": "https://www.inmobiliariafh.com/nuestros-desarrollos/solara-del-mar",
+    "Vista Vela": "https://grupovelas.com.mx/desarrollo/vistavela",
+    "Tramonti": "https://tramontiparadiso.com/es/inicio/",
+    "Punta Mirante": "https://ronival.com/es/punta-mirante/",
+}
+
+# Alias para normalizar nombres que llegan distinto en CSV
+NAME_ALIASES = {
+    "Solara del mar": "Solara del Mar",
+    "Vista vela": "Vista Vela",
+    "Vistavela": "Vista Vela",
+    "Vista Vela Plus": "Vista Vela",
+    "Tramonti Paradiso": "Tramonti",
+}
+
+WHITE_LOGO_NAMES = {"Casa NIMA", "CORA", "Punta Mirante", "Santarena", "MARE"}
 
 # === Nuestro desarrollo fijo ===
 OUR_DEV = {
@@ -33,6 +69,9 @@ st.markdown(f"""
 .info-row .v {{ font-weight:600;font-size:14px;color:{TEXT}; }}
 ul.bul {{ margin:6px 0 0 18px; color:{TEXT}; font-size:14px; line-height:1.4; }}
 iframe[title^="folium"] {{ scroll-margin-top: 140px; }}
+.logo-wrap {{ background:#FFFFFF; border:1px solid #E2E8F0; border-radius:12px; padding:8px; display:inline-block; }}
+.logo-wrap-dark {{ background:#0B132B; border:1px solid #334155; border-radius:12px; padding:10px; display:inline-block; }}
+.logo-wrap img, .logo-wrap-dark img {{ max-width:140px; height:auto; display:block; }}
 </style>
 """, unsafe_allow_html=True)
 
@@ -114,11 +153,42 @@ if not csv_file:
     st.stop()
 
 df = pd.read_csv(csv_file, dtype=str).fillna("")
-need_cols = ["nombre","website","tipo_desarrollo","diseno_estilo","estado_desarrollo",
-             "tipologias_superficie_m2","num_unidades","amenidades","servicios_adicionales","lat","lon"]
+need_cols = [
+    "nombre","website","tipo_desarrollo","diseno_estilo","estado_desarrollo",
+    "tipologias_superficie_m2","num_unidades","amenidades","servicios_adicionales",
+    "lat","lon","logo"
+]
 for c in need_cols:
     if c not in df.columns: df[c] = ""
 df[need_cols] = df[need_cols].astype(str)
+
+# Aplicar correcciones de websites
+if "website" in df.columns:
+    df["website"] = df.apply(lambda r: WEBSITE_FIXES.get(str(r.get("nombre", "")), str(r.get("website", ""))), axis=1)
+
+# Completar ruta de logo si falta
+if "logo" not in df.columns:
+    df["logo"] = ""
+
+def _compute_logo_path(row):
+    name_raw = str(row.get("nombre", "")).strip()
+    name = NAME_ALIASES.get(name_raw, name_raw)
+    logo_cell = str(row.get("logo", "")).strip()
+    # Si ya viene ruta en CSV, respétala
+    if logo_cell:
+        # Si es URL externa
+        if logo_cell.startswith("http://") or logo_cell.startswith("https://"):
+            return logo_cell
+        # Ruta relativa local
+        return os.path.join(LOGO_DIR, os.path.basename(logo_cell))
+    # Si no hay en CSV, intenta por mapeo
+    fname = LOGO_FILES.get(name, "")
+    if fname:
+        return os.path.join(LOGO_DIR, fname)
+    return ""
+
+df["logo_path"] = df.apply(_compute_logo_path, axis=1)
+
 names = df["nombre"].astype(str).tolist()
 
 # ================== HEADER + SELECTOR ==================
@@ -156,6 +226,33 @@ left, right = st.columns([1.05, 2.35], gap="large")
 with left:
     sel = df.loc[df["nombre"] == st.session_state.selected_name].head(1)
     if not sel.empty:
+        # Logo arriba del recuadro con fondo blanco (mejor visibilidad)
+        logo_src = str(sel.iloc[0].get("logo_path", "")).strip()
+        dev_name_raw = str(sel.iloc[0].get("nombre", "")).strip()
+        dev_name = NAME_ALIASES.get(dev_name_raw, dev_name_raw)
+        wrap_class = "logo-wrap-dark" if dev_name in WHITE_LOGO_NAMES else "logo-wrap"
+        if logo_src:
+            img_html = ""
+            if logo_src.startswith("http://") or logo_src.startswith("https://"):
+                # URL directa
+                img_html = f"<img src='{logo_src}' style='width:140px; display:block;'/>"
+            else:
+                # Archivo local -> embebido en base64 para que funcione en Cloud
+                try:
+                    path_try = logo_src
+                    if not os.path.exists(path_try):
+                        # también probar sin prefijo relativo
+                        path_try = os.path.join(os.getcwd(), logo_src)
+                    with open(path_try, "rb") as f:
+                        data = f.read()
+                    ext = os.path.splitext(path_try)[1].lower()
+                    m = "png" if ext in [".png"] else "jpeg"
+                    b64 = base64.b64encode(data).decode("utf-8")
+                    img_html = f"<img src='data:image/{m};base64,{b64}' style='width:140px; display:block;'/>"
+                except Exception:
+                    img_html = ""
+            if img_html:
+                st.markdown(f"<div class='{wrap_class}'>{img_html}</div>", unsafe_allow_html=True)
         st.markdown(details_card(sel.iloc[0]), unsafe_allow_html=True)
         try:
             d_km = haversine_km(float(sel.iloc[0]["lat"]), float(sel.iloc[0]["lon"]), OUR_DEV["lat"], OUR_DEV["lon"])
