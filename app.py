@@ -1,10 +1,9 @@
 import os
+import math
 import pandas as pd
 import streamlit as st
 import folium
 from streamlit_folium import st_folium
-# Plugins seguros (opcionalmente activa MarkerCluster/Fullscreen luego)
-from folium.plugins import MarkerCluster, Fullscreen
 
 # ================== CONFIG ==================
 st.set_page_config(page_title="Mapa competencia — Los Cabos", layout="wide")
@@ -12,8 +11,14 @@ st.set_page_config(page_title="Mapa competencia — Los Cabos", layout="wide")
 ACCENT  = "#0EA5A4"
 TEXT    = "#0B132B"
 
-# Desactiva etiquetas HTML flotantes para máxima compatibilidad en Cloud.
-SHOW_LABELS = True  # pon True si quieres probar DivIcon (ver nota más abajo)
+SHOW_LABELS = True  # mostrar etiquetas flotantes sobre cada desarrollo
+
+# === Nuestro desarrollo fijo ===
+OUR_DEV = {
+    "nombre": "Loma escondida",
+    "lat": 23.009139,
+    "lon": -109.732472
+}
 
 st.markdown(f"""
 <style>
@@ -27,8 +32,6 @@ st.markdown(f"""
 .info-row {{ margin:8px 0; }}
 .info-row .v {{ font-weight:600;font-size:14px;color:{TEXT}; }}
 ul.bul {{ margin:6px 0 0 18px; color:{TEXT}; font-size:14px; line-height:1.4; }}
-
-/* Evita que el foco de scroll salte al iframe del mapa */
 iframe[title^="folium"] {{ scroll-margin-top: 140px; }}
 </style>
 """, unsafe_allow_html=True)
@@ -43,7 +46,7 @@ def safe(x):
     if x is None:
         return ""
     try:
-        if pd.isna(x): 
+        if pd.isna(x):
             return ""
     except Exception:
         pass
@@ -70,7 +73,6 @@ def details_card(row):
     serv_list = split_csv(safe(row.get("servicios_adicionales")))
 
     link_html = f'<a href="{website}" target="_blank" style="color:{ACCENT};text-decoration:none;">Ir al sitio ↗</a>' if website else ""
-
     am_ul = "<ul class='bul'>" + "".join([f"<li>{safe(a)}</li>" for a in amen_list]) + "</ul>" if amen_list else "<div class='smalllabel'>—</div>"
     sv_ul = "<ul class='bul'>" + "".join([f"<li>{safe(a)}</li>" for a in serv_list]) + "</ul>" if serv_list else "<div class='smalllabel'>—</div>"
 
@@ -96,6 +98,14 @@ def details_card(row):
     </div>
     """
 
+def haversine_km(lat1, lon1, lat2, lon2):
+    R = 6371.0088
+    p1, p2 = math.radians(float(lat1)), math.radians(float(lat2))
+    dlat = p2 - p1
+    dlon = math.radians(float(lon2) - float(lon1))
+    a = math.sin(dlat/2)**2 + math.cos(p1)*math.cos(p2)*math.sin(dlon/2)**2
+    return R * (2 * math.atan2(math.sqrt(a), math.sqrt(1 - a)))
+
 # ================== DATA ==================
 fname_candidates = ["competencia_los_cabos_completa.csv", "competencia_los_cabos.csv"]
 csv_file = next((f for f in fname_candidates if os.path.exists(f)), None)
@@ -103,15 +113,12 @@ if not csv_file:
     st.error("No encontré el CSV de competencia en la carpeta del proyecto.")
     st.stop()
 
-# Leer como str para evitar dtypes raros; convertimos lat/lon a float solo al usar
 df = pd.read_csv(csv_file, dtype=str).fillna("")
-
 need_cols = ["nombre","website","tipo_desarrollo","diseno_estilo","estado_desarrollo",
              "tipologias_superficie_m2","num_unidades","amenidades","servicios_adicionales","lat","lon"]
 for c in need_cols:
     if c not in df.columns: df[c] = ""
 df[need_cols] = df[need_cols].astype(str)
-
 names = df["nombre"].astype(str).tolist()
 
 # ================== HEADER + SELECTOR ==================
@@ -125,115 +132,129 @@ with tcol1:
 with tcol2:
     idx = names.index(st.session_state.selected_name) if st.session_state.selected_name in names else 0
     selected = st.selectbox("Selecciona desarrollo", names, index=idx)
-    c1, c2, _ = st.columns([1,1,6])
+    c1, c2, c3 = st.columns([1,1,2])
     if c1.button("⟵ Anterior", use_container_width=True):
-        i = names.index(selected); selected = names[(i-1) % len(names)]
+        selected = names[(names.index(selected)-1) % len(names)]
     if c2.button("Siguiente ⟶", use_container_width=True):
-        i = names.index(selected); selected = names[(i+1) % len(names)]
+        selected = names[(names.index(selected)+1) % len(names)]
     st.session_state.selected_name = selected
+    if c3.button("📍 Zoom a Loma escondida", use_container_width=True):
+        st.session_state["zoom_to_our"] = True
+    else:
+        st.session_state["zoom_to_our"] = st.session_state.get("zoom_to_our", False)
+
+    # Selector de tipo de mapa (capas base)
+    base_maps = [
+        "CartoDB Positron",
+        "OpenStreetMap",
+        "Esri World Imagery"
+    ]
+    base_choice = st.selectbox("Tipo de mapa", base_maps, index=0)
 
 # ================== LAYOUT ==================
 left, right = st.columns([1.05, 2.35], gap="large")
-
 with left:
     sel = df.loc[df["nombre"] == st.session_state.selected_name].head(1)
-    if sel.empty:
-        st.info("Selecciona un desarrollo o haz clic en el mapa.")
-    else:
-        st.markdown(details_card(sel.iloc[0]), unsafe_allow_html=True)
-
-with right:
-    # Centro del mapa
-    center = [23.0, -109.73]; zoom = 11
     if not sel.empty:
+        st.markdown(details_card(sel.iloc[0]), unsafe_allow_html=True)
         try:
-            lat = float(sel.iloc[0]["lat"])
-            lon = float(sel.iloc[0]["lon"])
-            center, zoom = [float(lat), float(lon)], 14
+            d_km = haversine_km(float(sel.iloc[0]["lat"]), float(sel.iloc[0]["lon"]), OUR_DEV["lat"], OUR_DEV["lon"])
+            st.info(f"**Distancia a {OUR_DEV['nombre']}:** {d_km:.2f} km")
         except Exception:
             pass
 
-    # Mapa
-    m = folium.Map(location=[float(center[0]), float(center[1])], zoom_start=int(zoom), control_scale=True)
+with right:
+    # Centro y zoom
+    center, zoom = [23.0, -109.73], 11
+    if st.session_state.get("zoom_to_our"):
+        center, zoom = [OUR_DEV["lat"], OUR_DEV["lon"]], 15
+        st.session_state["zoom_to_our"] = False
+    elif not sel.empty:
+        try:
+            center, zoom = [float(sel.iloc[0]["lat"]), float(sel.iloc[0]["lon"])], 14
+        except Exception:
+            pass
 
-    # Capas base con ATRIBUCIÓN válida
-    folium.TileLayer("CartoDB positron", name="CartoDB Positron", control=True).add_to(m)
-    folium.TileLayer("OpenStreetMap", name="OpenStreetMap").add_to(m)
+    # === Mapa con selección de base ===
+    m = folium.Map(location=center, zoom_start=zoom, control_scale=True)
+
+    # Capas base (solo una visible a la vez)
+    folium.TileLayer(
+        "CartoDB positron",
+        name="CartoDB Positron",
+        overlay=False, control=True, show=(base_choice == "CartoDB Positron")
+    ).add_to(m)
+
+    folium.TileLayer(
+        "OpenStreetMap",
+        name="OpenStreetMap",
+        overlay=False, control=True, show=(base_choice == "OpenStreetMap")
+    ).add_to(m)
+
     folium.TileLayer(
         tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
         attr="Tiles © Esri — Source: Esri, Maxar, Earthstar Geographics, and the GIS User Community",
-        name="Esri World Imagery"
-    ).add_to(m)
-    folium.TileLayer(
-        tiles="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
-        attr="© OpenStreetMap contributors, Humanitarian style",
-        name="OSM HOT"
-    ).add_to(m)
-    folium.TileLayer(
-        tiles="https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
-        attr="Map data: © OpenStreetMap contributors, SRTM | Style: © OpenTopoMap (CC-BY-SA)",
-        name="OpenTopoMap"
+        name="Esri World Imagery",
+        overlay=False, control=True, show=(base_choice == "Esri World Imagery")
     ).add_to(m)
 
-    # Plugins seguros
-    Fullscreen(position="topleft", title="Pantalla completa", title_cancel="Salir").add_to(m)
-    cluster = MarkerCluster(name="Desarrollos", disableClusteringAtZoom=int(16)).add_to(m)
+    folium.LayerControl(position="topleft", collapsed=False).add_to(m)
 
-    # Marcadores simples (solo tipos nativos)
+    # Loma escondida: estrella verde muy visible
+    folium.Marker(
+        [float(OUR_DEV["lat"]), float(OUR_DEV["lon"])],
+        tooltip=str(OUR_DEV["nombre"]),
+        icon=folium.Icon(color="green", icon="star", prefix="fa")
+    ).add_to(m)
+
+    if SHOW_LABELS:
+        from folium.features import DivIcon
+        folium.map.Marker(
+            [float(OUR_DEV["lat"]), float(OUR_DEV["lon"])],
+            icon=DivIcon(
+                icon_size=(200, 36), icon_anchor=(0, 0),
+                html=f"<div style='background:#FFF;padding:2px 8px;border-radius:8px;border:1px solid #CBD5E1;color:{TEXT};font-weight:700;font-size:12px;transform: translate(10px, -28px);'>{OUR_DEV['nombre']}</div>"
+            )
+        ).add_to(m)
+
+    # Marcadores de competencia
     for _, r in df.iterrows():
         try:
-            lat = float(r["lat"]); lon = float(r["lon"])
+            lat, lon = float(r["lat"]), float(r["lon"])
         except Exception:
             continue
         name = str(r.get("nombre") or "")
-        is_sel = (name == st.session_state.selected_name)
-        color = "red" if is_sel else "blue"
-        folium.Marker(
-            [float(lat), float(lon)],
-            tooltip=name,
-            icon=folium.Icon(color=color, icon="info-sign")
-        ).add_to(cluster)
+        if name == OUR_DEV["nombre"]:
+            continue
+        # marcador principal
+        folium.Marker([lat, lon], tooltip=name, icon=folium.Icon(color="blue", icon="info-sign")).add_to(m)
 
-        # --- OPCIONAL: etiquetas sobre el mapa (DivIcon) ---
+        # etiqueta flotante (si está activada)
         if SHOW_LABELS:
             from folium.features import DivIcon
-            html = f"""
-            <div style="
-                background:#FFFFFF;
-                padding:2px 8px;
-                border-radius:8px;
-                border:1px solid #CBD5E1;
-                color:{TEXT};
-                font-weight:600;
-                font-size:12px;
-                transform: translate(10px, -28px);
-            ">{name}</div>
-            """
             folium.map.Marker(
-                [float(lat), float(lon)],
-                icon=DivIcon(icon_size=(200, 36), icon_anchor=(0, 0), html=str(html))
+                [lat, lon],
+                icon=DivIcon(
+                    icon_size=(200, 36), icon_anchor=(0, 0),
+                    html=f"<div style='background:#FFF;padding:2px 8px;border-radius:8px;border:1px solid #CBD5E1;color:{TEXT};font-weight:600;font-size:12px;transform: translate(10px, -28px);'>{name}</div>"
+                )
             ).add_to(m)
 
-    # Fit a todos si no hay seleccionado
-    try:
-        pts = df[["lat","lon"]].dropna()
-        pts_list = [[float(a), float(b)] for a, b in pts.values.tolist()]
-        if pts_list and sel.empty:
-            m.fit_bounds(pts_list)
-    except Exception:
-        pass
+    # Línea opcional de distancia
+    if st.checkbox("Mostrar línea de distancia a Loma escondida", value=True) and not sel.empty:
+        try:
+            lat1, lon1 = float(sel.iloc[0]["lat"]), float(sel.iloc[0]["lon"])
+            folium.PolyLine([[lat1, lon1], [OUR_DEV["lat"], OUR_DEV["lon"]]],
+                            weight=3, color="green",
+                            tooltip=f"{haversine_km(lat1, lon1, OUR_DEV['lat'], OUR_DEV['lon']):.2f} km").add_to(m)
+        except Exception:
+            pass
 
-    ret = st_folium(m, height=780, use_container_width=True, key="map")
+    # Render del mapa
+    st_folium(m, height=780, use_container_width=True, key="map")
 
-    # Selección opcional desde el mapa
-    if ret and isinstance(ret.get("last_object_clicked_tooltip"), str):
-        clicked = ret["last_object_clicked_tooltip"]
-        if clicked in names:
-            st.session_state.selected_name = clicked
-
-# ================== VISTA TABLAR ==================
+# ================== TABLA ==================
 st.markdown("---")
-cols_show = ["nombre","tipo_desarrollo","diseno_estilo","estado_desarrollo",
-             "num_unidades","tipologias_superficie_m2","amenidades","website"]
+cols_show = ["nombre","tipo_desarrollo","diseno_estilo","estado_desarrollo","num_unidades","tipologias_superficie_m2","amenidades","website"]
 present_cols = [c for c in cols_show if c in df.columns]
 st.dataframe(df[present_cols], use_container_width=True)
