@@ -239,6 +239,21 @@ with tcol2:
 # ================== LAYOUT ==================
 left, right = st.columns([1.05, 2.35], gap="large")
 with left:
+    # === Precios de desarrollos ===
+    precios_desarrollos = {
+        "Tramonti": ["$267,751", "$531,200"],
+        "Casa NIMA": ["$376,950", "$720,300"],
+        "Santarena": ["$462,574", "$554,652"],
+        "ALANA cerro colorado": ["$385,638", "$494,044"],
+        "Vista Vela": ["$460,000", "$495,000"],
+        "Dunna": ["$706,000", "$1,211,000"],
+        "Solara del Mar": ["$356,000", "$750,000"],
+        "Punta Mirante": ["$489,000", "$579,000"],
+        "CORA": ["$739,000", "$894,000"],
+        "Ladera": ["precio no divulgado por desarrolladora"],
+        "MARE": ["precio no divulgado por desarrolladora"]
+    }
+
     sel = df.loc[df["nombre"] == st.session_state.selected_name].head(1)
     if not sel.empty:
         # Logo arriba del recuadro con fondo blanco (mejor visibilidad)
@@ -269,6 +284,16 @@ with left:
             if img_html:
                 st.markdown(f"<div class='{wrap_class}'>{img_html}</div>", unsafe_allow_html=True)
         st.markdown(details_card(sel.iloc[0]), unsafe_allow_html=True)
+
+        # Mostrar precios justo después de los detalles principales
+        selected_desarrollo = dev_name
+        precios = precios_desarrollos.get(selected_desarrollo, ["precio no divulgado por desarrolladora"])
+        if len(precios) == 2:
+            st.markdown(f"**Precio desde:** {precios[0]}  ")
+            st.markdown(f"**Precio hasta:** {precios[1]}")
+        else:
+            st.markdown(f"**Precio:** {precios[0]}")
+
         try:
             d_km = haversine_km(float(sel.iloc[0]["lat"]), float(sel.iloc[0]["lon"]), OUR_DEV["lat"], OUR_DEV["lon"])
             st.info(f"**Distancia a {OUR_DEV['nombre']}:** {d_km:.2f} km")
