@@ -16,6 +16,9 @@ SHOW_LABELS = True  # mostrar etiquetas flotantes sobre cada desarrollo
 
 LOGO_DIR = "static/logos"
 
+# Altura del mapa para evitar scroll brusco
+MAP_HEIGHT = 560  # altura del mapa para evitar scroll y encajar en 1 pantalla
+
 # Mapeo de archivos de logo (por nombre de desarrollo -> archivo)
 LOGO_FILES = {
     "Santarena": "santarena.png",
@@ -37,6 +40,21 @@ WEBSITE_FIXES = {
     "Vista Vela": "https://grupovelas.com.mx/desarrollo/vistavela",
     "Tramonti": "https://tramontiparadiso.com/es/inicio/",
     "Punta Mirante": "https://ronival.com/es/punta-mirante/",
+}
+
+# === Precios de desarrollos (mapeo global) ===
+PRECIOS_DESARROLLOS = {
+    "Tramonti": ["$267,751", "$531,200"],
+    "Casa NIMA": ["$504,000", "$720,300"],
+    "Santarena": ["$466,000", "$554,652"],
+    "ALANA cerro colorado": ["$385,638", "$494,044"],
+    "Vista Vela": ["$774,000", "$495,000"],
+    "Dunna": ["$706,000", "$1,211,000"],
+    "Solara del Mar": ["$475,000", "$750,000"],
+    "Punta Mirante": ["$658,000", "$579,000"],
+    "CORA": ["$476,000", "$894,000"],
+    "Ladera": ["precio no divulgado por desarrolladora"],
+    "MARE": ["precio no divulgado por desarrolladora"]
 }
 
 # Alias para normalizar nombres que llegan distinto en CSV
@@ -65,14 +83,16 @@ st.markdown(f"""
   padding:18px;box-shadow:0 1px 6px rgba(0,0,0,0.05);
 }}
 .card h3 {{ margin:0;color:{TEXT}; }}
-.smalllabel {{ color:#334155;font-size:12px;margin-bottom:4px; }}
+.smalllabel {{ color:#334155;font-size:16px;margin-bottom:8px; }}
 .info-row {{ margin:8px 0; }}
-.info-row .v {{ font-weight:600;font-size:14px;color:{TEXT}; }}
-ul.bul {{ margin:6px 0 0 18px; color:{TEXT}; font-size:14px; line-height:1.4; }}
-iframe[title^="folium"] {{ scroll-margin-top: 140px; }}
+.v, .info-row .v {{ font-weight:700;font-size:18px;color:{TEXT}; line-height:1.55; }}
+ul.bul {{ margin:10px 0 0 22px; color:{TEXT}; font-size:16px; line-height:1.55; }}
+iframe[title^="folium"] {{ scroll-margin-top: 180px; outline: none; }}
 .logo-wrap {{ background:#FFFFFF; border:1px solid #E2E8F0; border-radius:12px; padding:8px; display:inline-block; }}
 .logo-wrap-dark {{ background:#0B132B; border:1px solid #334155; border-radius:12px; padding:10px; display:inline-block; }}
 .logo-wrap img, .logo-wrap-dark img {{ max-width:140px; height:auto; display:block; }}
+.map-wrap {{ max-width: 1100px; }}
+html, body, [data-testid="stAppViewContainer"] {{ height:100vh; overflow:hidden; }}
 </style>
 """, unsafe_allow_html=True)
 
@@ -101,7 +121,7 @@ def info_row(label, value):
     </div>
     """
 
-def details_card(row):
+def details_card(row, precios=None):
     nombre = safe(row.get("nombre"))
     website = safe(row.get("website"))
     tipo = safe(row.get("tipo_desarrollo"))
@@ -122,6 +142,8 @@ def details_card(row):
         <h3>{nombre}</h3>
         <div>{link_html}</div>
       </div>
+      {f"<div class='v' style='margin-top:6px;'>Precio desde: {precios[0]}</div>" if precios and len(precios)==2 else (f"<div class='v' style='margin-top:6px;'>Precio: {precios[0]}</div>" if precios else "")}
+      
       {info_row("Tipo de desarrollo", tipo)}
       {info_row("Estilo / diseño", estilo)}
       {info_row("Estado", estado)}
@@ -209,24 +231,32 @@ with tcol1:
     st.markdown("## Mapa de competencia — Los Cabos")
     st.caption(f"Proyectos: {len(df)}")
 with tcol2:
+    pass
+
+# ================== LAYOUT ==================
+left, right = st.columns([1.2, 2.1], gap="large")
+
+# --- RIGHT column FIRST ---
+with right:
+    # === Controles alineados con el panel izquierdo ===
     idx = names.index(st.session_state.selected_name) if st.session_state.selected_name in names else 0
-    selected = st.selectbox("Selecciona desarrollo", names, index=idx)
+    selected = st.selectbox("Selecciona desarrollo", names, index=idx, key="select_dev")
     c1, c2, c3 = st.columns([1,1,2])
+    nav_clicked = False
     if c1.button("⟵ Anterior", use_container_width=True):
         selected = names[(names.index(selected)-1) % len(names)]
+        nav_clicked = True
     if c2.button("Siguiente ⟶", use_container_width=True):
         selected = names[(names.index(selected)+1) % len(names)]
+        nav_clicked = True
     st.session_state.selected_name = selected
+    if nav_clicked:
+        st.session_state["ignore_next_map_click"] = True
     if c3.button("↩ Regresar a Loma escondida", use_container_width=True):
         st.session_state["map_center"] = {"lat": OUR_DEV["lat"], "lon": OUR_DEV["lon"], "zoom": 15}
         st.session_state["center_locked"] = True
 
-    # Selector de tipo de mapa (capas base)
-    base_maps = [
-        "Esri World Imagery",
-        "CartoDB Positron",
-        "OpenStreetMap"
-    ]
+    base_maps = ["Esri World Imagery", "CartoDB Positron", "OpenStreetMap"]
     if "base_choice" not in st.session_state:
         st.session_state["base_choice"] = "Esri World Imagery"
     base_choice = st.selectbox(
@@ -236,71 +266,6 @@ with tcol2:
         key="base_choice"
     )
 
-# ================== LAYOUT ==================
-left, right = st.columns([1.05, 2.35], gap="large")
-with left:
-    # === Precios de desarrollos ===
-    precios_desarrollos = {
-        "Tramonti": ["$267,751", "$531,200"],
-        "Casa NIMA": ["$376,950", "$720,300"],
-        "Santarena": ["$462,574", "$554,652"],
-        "ALANA cerro colorado": ["$385,638", "$494,044"],
-        "Vista Vela": ["$460,000", "$495,000"],
-        "Dunna": ["$706,000", "$1,211,000"],
-        "Solara del Mar": ["$356,000", "$750,000"],
-        "Punta Mirante": ["$489,000", "$579,000"],
-        "CORA": ["$739,000", "$894,000"],
-        "Ladera": ["precio no divulgado por desarrolladora"],
-        "MARE": ["precio no divulgado por desarrolladora"]
-    }
-
-    sel = df.loc[df["nombre"] == st.session_state.selected_name].head(1)
-    if not sel.empty:
-        # Logo arriba del recuadro con fondo blanco (mejor visibilidad)
-        logo_src = str(sel.iloc[0].get("logo_path", "")).strip()
-        dev_name_raw = str(sel.iloc[0].get("nombre", "")).strip()
-        dev_name = NAME_ALIASES.get(dev_name_raw, dev_name_raw)
-        wrap_class = "logo-wrap-dark" if dev_name in WHITE_LOGO_NAMES else "logo-wrap"
-        if logo_src:
-            img_html = ""
-            if logo_src.startswith("http://") or logo_src.startswith("https://"):
-                # URL directa
-                img_html = f"<img src='{logo_src}' style='width:140px; display:block;'/>"
-            else:
-                # Archivo local -> embebido en base64 para que funcione en Cloud
-                try:
-                    path_try = logo_src
-                    if not os.path.exists(path_try):
-                        # también probar sin prefijo relativo
-                        path_try = os.path.join(os.getcwd(), logo_src)
-                    with open(path_try, "rb") as f:
-                        data = f.read()
-                    ext = os.path.splitext(path_try)[1].lower()
-                    m = "png" if ext in [".png"] else "jpeg"
-                    b64 = base64.b64encode(data).decode("utf-8")
-                    img_html = f"<img src='data:image/{m};base64,{b64}' style='width:140px; display:block;'/>"
-                except Exception:
-                    img_html = ""
-            if img_html:
-                st.markdown(f"<div class='{wrap_class}'>{img_html}</div>", unsafe_allow_html=True)
-        st.markdown(details_card(sel.iloc[0]), unsafe_allow_html=True)
-
-        # Mostrar precios justo después de los detalles principales
-        selected_desarrollo = dev_name
-        precios = precios_desarrollos.get(selected_desarrollo, ["precio no divulgado por desarrolladora"])
-        if len(precios) == 2:
-            st.markdown(f"**Precio desde:** {precios[0]}  ")
-            st.markdown(f"**Precio hasta:** {precios[1]}")
-        else:
-            st.markdown(f"**Precio:** {precios[0]}")
-
-        try:
-            d_km = haversine_km(float(sel.iloc[0]["lat"]), float(sel.iloc[0]["lon"]), OUR_DEV["lat"], OUR_DEV["lon"])
-            st.info(f"**Distancia a {OUR_DEV['nombre']}:** {d_km:.2f} km")
-        except Exception:
-            pass
-
-with right:
     # Centro y zoom persistentes
     mc = st.session_state.get("map_center", {"lat": 23.0, "lon": -109.73, "zoom": 11})
     center, zoom = [mc["lat"], mc["lon"]], mc["zoom"]
@@ -371,27 +336,31 @@ with right:
             ).add_to(m)
 
     # Línea opcional de distancia
-    if st.checkbox("Mostrar línea de distancia a Loma escondida", value=True) and not sel.empty:
-        try:
-            lat1, lon1 = float(sel.iloc[0]["lat"]), float(sel.iloc[0]["lon"])
-            folium.PolyLine([[lat1, lon1], [OUR_DEV["lat"], OUR_DEV["lon"]]],
-                            weight=3, color="green",
-                            tooltip=f"{haversine_km(lat1, lon1, OUR_DEV['lat'], OUR_DEV['lon']):.2f} km").add_to(m)
-        except Exception:
-            pass
+    show_line = st.checkbox("Mostrar línea de distancia a Loma escondida", value=True)
+    if show_line:
+        sel_tmp = df.loc[df["nombre"] == st.session_state.selected_name].head(1)
+        if not sel_tmp.empty:
+            try:
+                lat1, lon1 = float(sel_tmp.iloc[0]["lat"]), float(sel_tmp.iloc[0]["lon"])
+                folium.PolyLine([[lat1, lon1], [OUR_DEV["lat"], OUR_DEV["lon"]]],
+                                weight=3, color="green",
+                                tooltip=f"{haversine_km(lat1, lon1, OUR_DEV['lat'], OUR_DEV['lon']):.2f} km").add_to(m)
+            except Exception:
+                pass
 
-    # Render del mapa
-    ret = st_folium(m, height=780, use_container_width=True, key="map")
+    # Render del mapa con max-width y altura controlada
+    st.markdown('<div class="map-wrap">', unsafe_allow_html=True)
+    ret = st_folium(m, height=MAP_HEIGHT, use_container_width=True, key="map")
+    st.markdown('</div>', unsafe_allow_html=True)
 
-    # Mantener selección de marcador si se hizo click
-    if ret and ret.get("last_object_clicked_tooltip"):
-        st.session_state.selected_name = ret["last_object_clicked_tooltip"]
-
+    # Selección desde el mapa (un solo click, con "debounce")
     try:
-        if ret and isinstance(ret.get("last_object_clicked"), dict):
-            lat = ret["last_object_clicked"].get("lat", None)
-            lng = ret["last_object_clicked"].get("lng", None)
-            if lat is not None and lng is not None:
+        lc = ret.get("last_object_clicked") if ret else None
+        if (not st.session_state.get("ignore_next_map_click")) and isinstance(lc, dict):
+            lat = lc.get("lat"); lng = lc.get("lng")
+            cur_click = (lat, lng) if (lat is not None and lng is not None) else None
+            prev_click = st.session_state.get("last_map_click")
+            if cur_click and cur_click != prev_click:
                 best_name, best_d = None, 1e9
                 for _, r in df.iterrows():
                     try:
@@ -401,8 +370,12 @@ with right:
                     d = haversine_km(lat, lng, rlat, rlon)
                     if d < best_d:
                         best_d, best_name = d, str(r.get("nombre") or "")
-                if best_name and best_d <= 0.08 and best_name in names:
+                # Umbral generoso de 0.25 km para no exigir doble click
+                if best_name and best_d <= 0.25 and best_name in names:
                     st.session_state.selected_name = best_name
+                st.session_state["last_map_click"] = cur_click
+        # Siempre limpiar el flag tras procesar
+        st.session_state["ignore_next_map_click"] = False
     except Exception:
         pass
 
@@ -423,6 +396,46 @@ with right:
             st.session_state["last_selected_name"] = cur
     except Exception:
         pass
+
+# --- LEFT column SECOND ---
+with left:
+    sel = df.loc[df["nombre"] == st.session_state.selected_name].head(1)
+    if not sel.empty:
+        # Logo arriba del recuadro con fondo blanco (mejor visibilidad)
+        logo_src = str(sel.iloc[0].get("logo_path", "")).strip()
+        dev_name_raw = str(sel.iloc[0].get("nombre", "")).strip()
+        dev_name = NAME_ALIASES.get(dev_name_raw, dev_name_raw)
+        wrap_class = "logo-wrap-dark" if dev_name in WHITE_LOGO_NAMES else "logo-wrap"
+        if logo_src:
+            img_html = ""
+            if logo_src.startswith("http://") or logo_src.startswith("https://"):
+                # URL directa
+                img_html = f"<img src='{logo_src}' style='width:140px; display:block;'/>"
+            else:
+                # Archivo local -> embebido en base64 para que funcione en Cloud
+                try:
+                    path_try = logo_src
+                    if not os.path.exists(path_try):
+                        # también probar sin prefijo relativo
+                        path_try = os.path.join(os.getcwd(), logo_src)
+                    with open(path_try, "rb") as f:
+                        data = f.read()
+                    ext = os.path.splitext(path_try)[1].lower()
+                    m = "png" if ext in [".png"] else "jpeg"
+                    b64 = base64.b64encode(data).decode("utf-8")
+                    img_html = f"<img src='data:image/{m};base64,{b64}' style='width:140px; display:block;'/>"
+                except Exception:
+                    img_html = ""
+            if img_html:
+                st.markdown(f"<div class='{wrap_class}'>{img_html}</div>", unsafe_allow_html=True)
+        precios = PRECIOS_DESARROLLOS.get(dev_name, ["precio no divulgado por desarrolladora"])
+        st.markdown(details_card(sel.iloc[0], precios=precios), unsafe_allow_html=True)
+
+        try:
+            d_km = haversine_km(float(sel.iloc[0]["lat"]), float(sel.iloc[0]["lon"]), OUR_DEV["lat"], OUR_DEV["lon"])
+            st.info(f"**Distancia a {OUR_DEV['nombre']}:** {d_km:.2f} km")
+        except Exception:
+            pass
 
 # ================== TABLA ==================
 st.markdown("---")
