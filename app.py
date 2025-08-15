@@ -51,10 +51,10 @@ PRECIOS_DESARROLLOS = {
     "Vista Vela": ["$774,000", "$495,000"],
     "Dunna": ["$706,000", "$1,211,000"],
     "Solara del Mar": ["$475,000", "$750,000"],
-    "Punta Mirante": ["$658,000", "$579,000"],
+    "Punta Mirante": ["$628,000", "$579,000"],
     "CORA": ["$476,000", "$894,000"],
-    "Ladera": ["precio no divulgado por desarrolladora"],
-    "MARE": ["precio no divulgado por desarrolladora"]
+    "Ladera": ["875,000", "1,250,000"],
+    "MARE": ["$350,000", "$800,000"]
 }
 
 # Alias para normalizar nombres que llegan distinto en CSV
